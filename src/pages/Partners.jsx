@@ -28,30 +28,36 @@ export default function Partners() {
                     <div className="flex flex-col md:flex-row items-center gap-12 lg:gap-20">
                         {/* Left: Placeholder Logo */}
                         <div className="w-full md:w-1/2 flex justify-center md:justify-end">
-                            <div className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[420px] lg:h-[420px] rounded-full bg-gray-50 flex items-center justify-center border border-gray-100 shadow-inner group">
-                                <div className="absolute inset-0 bg-linear-to-tr from-[#419CB8]/10 to-transparent rounded-full opacity-60"></div>
-                                <div className="w-1/2 h-1/2 rounded-full border-12 border-[#419CB8]/10 flex items-center justify-center p-6 relative">
-                                    <div className="w-full h-full rounded-full bg-[#419CB8]/5 animate-pulse flex items-center justify-center">
-                                        <span className="text-gray-300 font-black text-sm tracking-widest uppercase opacity-40">LOGO HERE</span>
-                                    </div>
-                                    <div className="absolute w-2 h-2 rounded-full bg-[#419CB8]/30 top-0 left-1/2 -ml-1"></div>
-                                    <div className="absolute w-1 h-1 rounded-full bg-[#419CB8]/30 bottom-0 left-1/2 -ml-0.5"></div>
-                                    <div className="absolute w-1.5 h-1.5 rounded-full bg-[#419CB8]/30 left-0 top-1/2 -mt-0.75"></div>
-                                    <div className="absolute w-1.5 h-1.5 rounded-full bg-[#419CB8]/30 right-0 top-1/2 -mt-0.75"></div>
-                                </div>
+                            <div
+                                className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[420px] lg:h-[420px] rounded-full bg-white flex items-center justify-center border border-gray-100 shadow-[0_30px_70px_rgba(65,156,184,0.2)] group overflow-hidden transition-transform duration-1000 lg:hover:scale-105 max-lg:transform-none!"
+                                style={{ transform: 'perspective(1500px) rotateY(0deg) rotateX(0deg) translateZ(50px)' }}
+                            >
+                                <div className="absolute inset-0 bg-linear-to-tr from-[#419CB8]/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500 z-20 pointer-events-none"></div>
+                                <img
+                                    src="/icpep.png"
+                                    alt="ICpEP Logo"
+                                    className="w-full h-full object-contain relative z-10 transition-transform duration-700"
+                                />
                             </div>
                         </div>
 
                         {/* Right: Content */}
                         <div className="w-full md:w-1/2 text-center md:text-left">
-                            <h1 className="text-6xl sm:text-7xl lg:text-9xl font-black text-[#419CB8] tracking-tighter mb-6">
-                                PARTNER
+                            <h1 className="text-6xl sm:text-7xl lg:text-9xl font-black text-[#419CB8] tracking-tighter mb-4 lg:mb-6">
+                                ICPEP
                             </h1>
-                            <p className="text-gray-500 text-sm sm:text-base leading-relaxed mb-10 max-w-lg mx-auto md:mx-0">
-                                This is a sample description of the partner organization. It will be replaced with real content as per the user's requirements. Our partners collaborate on curriculum development, internships, and bridging the gap between academia and the industry.
-                            </p>
+                            <div className="text-gray-500 text-sm sm:text-base leading-relaxed mb-10 w-full max-w-full lg:max-w-3xl mx-auto md:mx-0">
+                                <p className="font-bold text-[#419CB8] mb-3 text-base sm:text-lg lg:text-xl whitespace-nowrap">
+                                    The Institute of Computer Engineers of the Philippines (ICpEP), Inc.
+                                </p>
+                                <p className="text-justify">
+                                    The country’s premier professional organization for computer engineering, representing practitioners, educators, and students. Founded in 1992 and reformed in 2008, it serves as the official body for industry and academia, dedicated to elevating the profession through the Certified Computer Engineer (CCpE) credential and strategic partnerships. With its vision to produce world-class Filipino engineers, ICpEP fosters a culture of excellence, innovation, and global competitiveness by bridging the gap between local talent and the international technological landscape.
+                                </p>
+                            </div>
                             <a
-                                href="#"
+                                href="https://www.facebook.com/icpep.se.national?rdid=26Pze0e0FUezVOnN&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1AjjyQWKMM%2F#"
+                                target="_blank"
+                                rel="noopener noreferrer"
                                 className="inline-flex items-center gap-3 bg-[#00607a] hover:bg-[#004e63] text-white px-10 py-4 rounded-sm font-bold text-xs tracking-widest transition-all shadow-lg hover:shadow-[#00607a]/20 uppercase group"
                             >
                                 GO TO SITE
