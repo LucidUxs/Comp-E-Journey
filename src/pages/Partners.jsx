@@ -29,7 +29,7 @@ export default function Partners() {
                         {/* Left: Placeholder Logo */}
                         <div className="w-full md:w-1/2 flex justify-center md:justify-end">
                             <div
-                                className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[420px] lg:h-[420px] rounded-full bg-white flex items-center justify-center border border-gray-100 shadow-[0_30px_70px_rgba(65,156,184,0.2)] group overflow-hidden transition-transform duration-1000 lg:hover:scale-105 max-lg:transform-none!"
+                                className="relative w-64 h-64 sm:w-80 sm:h-80 lg:w-[420px] lg:h-[420px] rounded-full bg-white flex items-center justify-center border border-gray-100 group overflow-hidden transition-transform duration-1000 lg:hover:scale-105 max-lg:transform-none!"
                                 style={{ transform: 'perspective(1500px) rotateY(0deg) rotateX(0deg) translateZ(50px)' }}
                             >
                                 <div className="absolute inset-0 bg-linear-to-tr from-[#419CB8]/10 to-transparent opacity-60 group-hover:opacity-80 transition-opacity duration-500 z-20 pointer-events-none"></div>
@@ -46,11 +46,11 @@ export default function Partners() {
                             <h1 className="text-6xl sm:text-7xl lg:text-9xl font-black text-[#419CB8] tracking-tighter mb-4 lg:mb-6">
                                 ICPEP
                             </h1>
-                            <div className="text-gray-500 text-sm sm:text-base leading-relaxed mb-10 w-full max-w-full lg:max-w-3xl mx-auto md:mx-0">
-                                <p className="font-bold text-[#419CB8] mb-3 text-base sm:text-lg lg:text-xl whitespace-nowrap">
+                            <div className="text-gray-500 text-sm sm:text-base leading-relaxed mb-10 w-full max-w-full lg:max-w-3xl mx-auto md:mx-0 px-2 sm:px-0">
+                                <p className="font-bold text-[#419CB8] mb-3 text-base sm:text-lg lg:text-xl whitespace-normal md:whitespace-nowrap leading-tight">
                                     The Institute of Computer Engineers of the Philippines (ICpEP), Inc.
                                 </p>
-                                <p className="text-justify">
+                                <p className="text-left md:text-justify">
                                     The country’s premier professional organization for computer engineering, representing practitioners, educators, and students. Founded in 1992 and reformed in 2008, it serves as the official body for industry and academia, dedicated to elevating the profession through the Certified Computer Engineer (CCpE) credential and strategic partnerships. With its vision to produce world-class Filipino engineers, ICpEP fosters a culture of excellence, innovation, and global competitiveness by bridging the gap between local talent and the international technological landscape.
                                 </p>
                             </div>
