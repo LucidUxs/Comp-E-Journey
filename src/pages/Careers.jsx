@@ -259,7 +259,7 @@ function TestimonialSection() {
   };
 
   return (
-    <div className="mt-20 md:mt-32 max-w-[100vw] overflow-hidden relative pb-16 md:pb-20">
+    <div className="mt-20 md:mt-32 max-w-[100vw] overflow-hidden relative pb-16 md:pb-32 pt-20 md:pt-32">
       <div
         ref={sectionRef}
         className={`max-w-7xl mx-auto px-6 relative z-10 reveal ${sectionVisible ? 'reveal-active' : ''}`}
@@ -375,8 +375,8 @@ function TestimonialSection() {
                   key={idx}
                   onClick={() => setCurrentIndex(idx)}
                   className={`transition-all duration-300 rounded-full ${idx === currentIndex
-                      ? 'w-8 h-2 bg-[#419CB8]'
-                      : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'
+                    ? 'w-8 h-2 bg-[#419CB8]'
+                    : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'
                     }`}
                   aria-label={`Go to sub-slide ${idx + 1}`}
                 />
@@ -443,7 +443,7 @@ function Careers() {
       </div>
 
       {/* Infinite Sliders Wrapper */}
-      <div className="flex flex-col gap-12 relative">
+      <div className="flex flex-col gap-12 relative bg-[#EEEEEE] py-12 md:py-24 mb-20 md:mb-32">
         {/* Swipe Indicator + Row 1 */}
         <div ref={row1Ref} className={`flex flex-col gap-4 reveal ${row1Visible ? 'reveal-active' : ''}`} style={{ transitionDelay: '150ms' }}>
           <div className="md:hidden flex flex-col items-center gap-2 pointer-events-none animate-bounce opacity-50">

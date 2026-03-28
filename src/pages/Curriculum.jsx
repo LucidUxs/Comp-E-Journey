@@ -22,8 +22,8 @@ function RoadmapItem({ subject, index, isActive }) {
   const isEven = index % 2 === 0;
 
   return (
-    <div className={`relative w-full min-h-[400px] md:min-h-[600px] flex items-center justify-center py-16 md:py-28 group`}>
-      
+    <div className={`relative w-full min-h-[500px] md:min-h-[600px] flex items-center justify-center py-16 md:py-32 group`}>
+
       {/* Central Road Node */}
       <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 z-30 transition-all duration-700">
         <div className={`w-6 h-6 md:w-10 md:h-10 rounded-full border-4 border-white shadow-2xl transition-all duration-700 ${isActive ? 'bg-[#419CB8] scale-125 md:scale-150 shadow-[0_0_40px_rgba(65,156,184,0.8)]' : 'bg-gray-200'}`} />
@@ -32,29 +32,30 @@ function RoadmapItem({ subject, index, isActive }) {
         )}
       </div>
 
-      {/* Horizontal Connection Stem (Connecting Road to Content) */}
-      <div 
-        className={`absolute left-[24px] md:left-1/2 top-1/2 -translate-y-1/2 z-20 transition-all duration-1000 origin-left ease-out ${isActive ? 'opacity-100' : 'opacity-0'}`}
-        style={{ 
-          width: 'calc(10% + 20px)', // Gap + offset
-          transform: isEven ? 'translateX(20px)' : 'translateX(-100%) translateX(-20px)'
+      {/* Horizontal Connection Stem - SYMMETRIC FIX */}
+      <div
+        className={`absolute left-[34px] md:left-1/2 top-1/2 -translate-y-1/2 z-20 transition-all duration-1000 ease-out ${isActive ? 'opacity-100' : 'opacity-0'}`}
+        style={{
+          width: 'clamp(40px, 15vw, 200px)',
+          // Perfectly symmetric translate offsets for both sides
+          transform: `translateX(${window.innerWidth < 768 ? '0px' : (isEven ? '16px' : 'calc(-100% - 16px)')})`,
         }}
       >
-        <div className={`h-[2px] bg-gradient-to-r from-[#419CB8] to-[#419CB8]/20 w-full`} />
+        <div className="h-[2px] bg-[#419CB8] md:bg-gradient-to-r md:from-[#419CB8] md:to-[#419CB8]/20 w-full" />
       </div>
 
       {/* Spacious Side-by-Side Content Container */}
-      <div className={`w-full max-w-screen-2xl px-12 md:px-24 flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-12 md:gap-32 relative z-10`}>
-        
-        {/* Spacer for the Road Area (Ensuring a gap) */}
+      <div className={`w-full max-w-screen-2xl px-6 md:px-24 flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-12 md:gap-40 lg:gap-56 relative z-10 pl-20 md:pl-0`}>
+
+        {/* Symmetric Spacer for the Road Area */}
         <div className="hidden md:block w-1/2" />
 
-        {/* COMPACT SIDE-BY-SIDE CARD */}
-        <div className={`w-full md:w-1/2 transition-all duration-1000 transform ${isActive ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-48 scale-90'}`}>
-          <div className="relative w-full bg-white rounded-[3.5rem] shadow-[0_60px_120px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden flex flex-col lg:flex-row items-stretch min-h-[420px]">
-            
-            {/* Image Side (Balanced 50%) */}
-            <div className={`w-full lg:w-1/2 h-[220px] lg:h-auto relative overflow-hidden shrink-0 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
+        {/* COMPACT SIDE-BY-SIDE CARD - ADDED SYMMETRIC SPACING */}
+        <div className={`w-full md:w-1/2 transition-all duration-1000 transform ${isActive ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-32 md:translate-y-48 scale-90 md:scale-95'} ${isEven ? 'md:pl-8' : 'md:pr-8'}`}>
+          <div className="relative w-full bg-white rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_60px_120px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden flex flex-col lg:flex-row items-stretch min-h-[420px] md:min-h-[450px]">
+
+            {/* Image Side (50%) */}
+            <div className={`w-full lg:w-1/2 h-[200px] md:h-[240px] lg:h-auto relative overflow-hidden shrink-0 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
               {subject.image && (
                 <div className="absolute inset-0">
                   <img
@@ -65,32 +66,31 @@ function RoadmapItem({ subject, index, isActive }) {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-30" />
                 </div>
               )}
-              <div className="absolute top-6 left-6 bg-white/20 backdrop-blur-xl p-4 rounded-2xl border border-white/30 text-white shadow-2xl z-20">
+              <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-white/20 backdrop-blur-xl p-3 md:p-4 rounded-xl md:rounded-2xl border border-white/30 text-white shadow-2xl z-20">
                 {subject.icon}
               </div>
             </div>
 
-            {/* Description Side (Balanced 50%) */}
-            <div className={`w-full lg:w-1/2 p-10 md:p-12 flex flex-col justify-center bg-white ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
-              <div className="flex flex-col gap-6">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-[3px] bg-[#419CB8] rounded-full shadow-[0_0_15px_rgba(65,156,184,0.4)]" />
-                  <span className="text-[#419CB8] font-black tracking-[0.7em] uppercase text-[10px] md:text-[11px]">
+            {/* Description Side (50%) */}
+            <div className={`w-full lg:w-1/2 p-10 md:p-12 lg:p-14 flex flex-col justify-center bg-white ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
+              <div className="flex flex-col gap-5 md:gap-7">
+                <div className="flex items-center gap-3 md:gap-5">
+                  <div className="w-10 md:w-14 h-[2px] md:h-[3px] bg-[#419CB8] rounded-full shadow-[0_0_15px_rgba(65,156,184,0.4)]" />
+                  <span className="text-[#419CB8] font-black tracking-[0.6em] md:tracking-[0.8em] uppercase text-[9px] md:text-[12px]">
                     Step 0{index + 1}
                   </span>
                 </div>
 
-                <h3 className="font-['Space_Grotesk'] font-black text-3xl md:text-5xl text-[#1e293b] uppercase tracking-tighter leading-[0.85] mb-2">
+                <h3 className="font-['Space_Grotesk'] font-black text-2xl md:text-3xl lg:text-5xl text-[#1e293b] uppercase tracking-tighter leading-[0.9] md:leading-[0.85] mb-2">
                   {subject.title}
                 </h3>
-                
-                <p className="text-gray-500 text-sm md:text-xl leading-relaxed font-medium text-justify hd-text opacity-95 line-clamp-4 md:line-clamp-none">
+
+                <p className="text-gray-500 text-sm md:text-xl leading-relaxed font-medium text-justify hd-text opacity-95">
                   {subject.description}
                 </p>
-
               </div>
             </div>
-            
+
           </div>
         </div>
 
@@ -222,26 +222,26 @@ function Curriculum() {
   }, [subjects.length]);
 
   return (
-    <div className="bg-[#fcfcfc] min-h-screen pt-24 md:pt-40 overflow-hidden scroll-smooth">
+    <div className="bg-[#fcfcfc] min-h-screen pt-20 md:pt-40 overflow-hidden scroll-smooth">
       {/* Cinematic Header Section */}
-      <div className="max-w-7xl mx-auto px-6 mb-20 md:mb-32 text-center relative z-10">
+      <div className="max-w-7xl mx-auto px-6 mb-16 md:mb-32 text-center relative z-10">
         <div className="inline-flex flex-col items-center">
           <div className="mb-3 flex items-center justify-center gap-4 bg-[#419CB8]/5 px-6 py-2 rounded-full border border-[#419CB8]/10 text-[#419CB8] backdrop-blur-sm">
-            <RiInformationLine className="w-6 h-6" />
+            <RiInformationLine className="w-5 h-5 md:w-6 md:h-6" />
             <span className="text-[10px] md:text-sm font-black uppercase tracking-[0.4em]">Curriculum Roadmap</span>
           </div>
-          <h1 className="font-black tracking-tighter uppercase font-['Space_Grotesk'] text-5xl md:text-8xl lg:text-[10rem] text-[#1e293b] leading-[0.85] mb-4">
+          <h1 className="font-black tracking-tighter uppercase font-['Space_Grotesk'] text-4xl md:text-8xl lg:text-[10rem] text-[#1e293b] leading-[0.85] mb-4">
             CORE <span className="text-[#419CB8]">JOURNEY</span>
           </h1>
-          <p className="font-light tracking-[0.5em] uppercase text-gray-400 text-sm md:text-xl max-w-2xl text-center">
+          <p className="font-light tracking-[0.3em] md:tracking-[0.5em] uppercase text-gray-400 text-xs md:text-xl max-w-2xl text-center">
             Bridging Academic Excellence with Professional Mastery
           </p>
         </div>
       </div>
 
-      <div ref={containerRef} className="relative w-full max-w-screen-2xl mx-auto pb-96">
+      <div ref={containerRef} className="relative w-full max-w-screen-2xl mx-auto pb-48 md:pb-96">
         {/* Central Vertical Road Line */}
-        <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 top-0 h-[calc(100%-480px)] w-[4px] md:w-[8px] bg-gray-100/50 z-0 rounded-full overflow-hidden">
+        <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 top-0 h-[calc(100%-120px)] w-[4px] md:w-[8px] bg-gray-100/50 z-0 rounded-full overflow-hidden">
           <div
             className="absolute top-0 left-0 w-full bg-gradient-to-b from-[#419CB8] via-[#419CB8] to-[#419CB8]/10 shadow-[0_0_20px_rgba(65,156,184,0.4)] transition-all duration-1000 ease-out z-10"
             style={{
