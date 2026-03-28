@@ -186,7 +186,7 @@ function TestimonialSection() {
       role: 'Italian-American Physicist and Computer Engineer',
       text: 'Led the design of the Intel 4004 in 1971, the world\'s first commercial single-chip microprocessor. By integrating all the functions of a Central Processing Unit (CPU) onto a single piece of silicon, he shrunk the "brain" of a computer from multiple circuit boards down to a tiny chip, making the birth of the personal computer possible.',
       image: '/assets/Faggin.jpg',
-      imageSource: 'Source: Kyoto Prize.org'
+      imageSource: 'Source: Kyoto Prize'
     },
     {
       id: 3,
@@ -194,7 +194,7 @@ function TestimonialSection() {
       role: 'American Computer Engineer and IBM Fellow',
       text: 'Co-invented the ISA bus in 1981, a hardware interface that allowed peripheral devices like disk drives, printers, and monitors to be plugged directly into the computer. This modular architecture made the IBM PC customizable and set the global standard for how modern computer hardware components communicate with each other.',
       image: '/assets/dean.jpg',
-      imageSource: 'Source: Dimensions.ai'
+      imageSource: 'Source: Dimensions.'
     },
     {
       id: 4,
@@ -202,7 +202,7 @@ function TestimonialSection() {
       role: 'British Computer Scientist and Hardware Architect',
       text: 'Designed the ARM (Acorn RISC Machine) architecture in 1985, focusing on a "Reduced Instruction Set" that required significantly less power to operate. This breakthrough in chip efficiency is the reason modern mobile technology exists; today, her architecture powers over 95% of the world\'s smartphones and tablets.',
       image: '/assets/wilson.jpg',
-      imageSource: 'Source: computerhistory.org'
+      imageSource: 'Source: Computer History'
     },
     {
       id: 5,
@@ -210,7 +210,7 @@ function TestimonialSection() {
       role: 'Japanese Electrical Engineer and Inventor',
       text: 'Invented Flash Memory (both NOR and NAND types) in 1984 while working at Toshiba. His engineering allowed for data to be stored permanently without needing a power source, leading to the invention of USB flash drives, SD cards, and the Solid State Drives (SSDs) that make modern laptops fast and durable.',
       image: '/assets/Masuoka.jpg',
-      imageSource: 'Source: allaboutcircuits.com'
+      imageSource: 'Source: All About Circuits'
     },
     {
       id: 6,
@@ -218,7 +218,7 @@ function TestimonialSection() {
       role: 'American Electrical Engineer and Supercomputer Architect',
       text: 'Developed the Cray-1 supercomputer in 1975, which implemented a unique "vector processing" hardware design. By using a C-shaped cabinet to minimize the length of internal wires, he pushed the limits of signal speed and cooling, allowing for the massive computational power used today in weather forecasting and scientific research.',
       image: '/assets/Cray.jpg',
-      imageSource: 'Source: Wikipedia.org'
+      imageSource: 'Source: Wikipedia'
     },
     {
       id: 7,
@@ -226,7 +226,7 @@ function TestimonialSection() {
       role: 'American Electrical Engineer and Nobel Laureate',
       text: 'Created the first working Integrated Circuit (IC) in 1958. He proved that resistors, capacitors, and transistors could all be manufactured from a single piece of semiconductor material. This eliminated the need to wire thousands of components by hand, allowing electronic devices to become smaller, more reliable, and mass-producible.',
       image: '/assets/kilby.jpg',
-      imageSource: 'Source: kyotoprize.org'
+      imageSource: 'Source: Kyoto Prize'
     },
     {
       id: 8,
@@ -234,7 +234,7 @@ function TestimonialSection() {
       role: 'American Computer Engineer and Co-founder of Apple',
       text: 'Single-handedly designed the hardware and circuit boards for the Apple II in 1977. His "minimalist" engineering approach used significantly fewer chips than other computers of the time to produce high-resolution color graphics and sound, proving that a powerful computer could be small enough and affordable enough for a home desk.',
       image: '/assets/wozniak.jpg',
-      imageSource: 'Source: britannica.com/'
+      imageSource: 'Source: Britannica'
     }
   ];
 
@@ -274,25 +274,26 @@ function TestimonialSection() {
             <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-gray-900 leading-[1.1] mb-6 md:mb-8 text-center md:text-left">
               Computer Engineer's Success Stories
             </h2>
-            <div className="flex gap-4 items-center justify-center md:justify-start mb-6">
+            {/* Desktop Navigation Buttons */}
+            <div className="hidden md:flex gap-6 items-center justify-start mb-8">
               <button
                 onClick={handlePrev}
-                className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#419CB8] hover:border-[#419CB8] hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm"
+                className="w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-white border border-gray-100 flex items-center justify-center text-[#419CB8] hover:text-white hover:bg-[#419CB8] hover:shadow-[0_8px_20px_rgba(65,156,184,0.4)] hover:-translate-y-1 active:scale-95 transition-all duration-300 shadow-[0_4px_10px_rgba(0,0,0,0.05)]"
                 aria-label="Previous Testimonial"
               >
-                <RiArrowLeftSLine className="w-6 h-6" />
+                <RiArrowLeftSLine className="w-6 h-6 lg:w-8 lg:h-8" />
               </button>
               <button
                 onClick={handleNext}
-                className="w-10 h-10 rounded-full border border-gray-200 flex items-center justify-center text-gray-400 hover:text-white hover:bg-[#419CB8] hover:border-[#419CB8] hover:scale-110 active:scale-95 transition-all duration-300 shadow-sm"
+                className="w-12 h-12 lg:w-14 lg:h-14 rounded-full bg-white border border-gray-100 flex items-center justify-center text-[#419CB8] hover:text-white hover:bg-[#419CB8] hover:shadow-[0_8px_20px_rgba(65,156,184,0.4)] hover:-translate-y-1 active:scale-95 transition-all duration-300 shadow-[0_4px_10px_rgba(0,0,0,0.05)]"
                 aria-label="Next Testimonial"
               >
-                <RiArrowRightSLine className="w-6 h-6" />
+                <RiArrowRightSLine className="w-6 h-6 lg:w-8 lg:h-8" />
               </button>
             </div>
 
-            {/* Pagination Dots */}
-            <div className="flex gap-2 items-center justify-center md:justify-start">
+            {/* Desktop Pagination Dots */}
+            <div className="hidden md:flex gap-2.5 items-center justify-start mb-0">
               {testimonials.map((_, idx) => (
                 <button
                   key={idx}
@@ -362,6 +363,42 @@ function TestimonialSection() {
                   );
                 })}
               </div>
+            </div>
+          </div>
+
+          {/* Mobile Pagination & Navigation */}
+          <div className="flex md:hidden flex-col items-center justify-center mt-8 gap-8 w-full z-20">
+            {/* Mobile Pagination Dots */}
+            <div className="flex gap-3 items-center justify-center">
+              {testimonials.map((_, idx) => (
+                <button
+                  key={idx}
+                  onClick={() => setCurrentIndex(idx)}
+                  className={`transition-all duration-300 rounded-full ${idx === currentIndex
+                      ? 'w-8 h-2 bg-[#419CB8]'
+                      : 'w-2 h-2 bg-gray-300 hover:bg-gray-400'
+                    }`}
+                  aria-label={`Go to sub-slide ${idx + 1}`}
+                />
+              ))}
+            </div>
+
+            {/* Mobile Navigation Buttons */}
+            <div className="flex gap-6 items-center justify-center w-full">
+              <button
+                onClick={handlePrev}
+                className="w-14 h-14 rounded-full bg-white border border-gray-100 flex items-center justify-center text-[#419CB8] hover:text-white hover:bg-[#419CB8] hover:shadow-[0_8px_20px_rgba(65,156,184,0.4)] hover:-translate-y-1 active:scale-95 transition-all duration-300 shadow-[0_4px_15px_rgba(0,0,0,0.08)]"
+                aria-label="Previous Testimonial"
+              >
+                <RiArrowLeftSLine className="w-8 h-8" />
+              </button>
+              <button
+                onClick={handleNext}
+                className="w-14 h-14 rounded-full bg-white border border-gray-100 flex items-center justify-center text-[#419CB8] hover:text-white hover:bg-[#419CB8] hover:shadow-[0_8px_20px_rgba(65,156,184,0.4)] hover:-translate-y-1 active:scale-95 transition-all duration-300 shadow-[0_4px_15px_rgba(0,0,0,0.08)]"
+                aria-label="Next Testimonial"
+              >
+                <RiArrowRightSLine className="w-8 h-8" />
+              </button>
             </div>
           </div>
         </div>
