@@ -37,7 +37,7 @@ function RoadmapItem({ subject, index, isActive }) {
         {/* Horizontal Connection Line for Mobile */}
         <div className={`absolute left-[24px] top-1/2 -translate-y-1/2 w-10 h-[2px] bg-[#419CB8] transition-all duration-700 ${isActive ? 'opacity-100' : 'opacity-0'}`} />
 
-        <div className={`w-full bg-white rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.08)] border border-gray-100 overflow-hidden transition-all duration-1000 transform ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
+        <div className={`w-full bg-white rounded-md shadow-[0_30px_60px_rgba(0,0,0,0.08)] border border-gray-100 overflow-hidden transition-all duration-1000 transform ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'} min-h-[480px] flex flex-col`}>
           {/* Mobile Image (Top) */}
           <div className="relative w-full h-[220px] overflow-hidden">
             {subject.image && (
@@ -47,14 +47,14 @@ function RoadmapItem({ subject, index, isActive }) {
                 className="w-full h-full object-cover"
               />
             )}
-            <div className="absolute top-4 left-4 bg-white/20 backdrop-blur-xl p-3 rounded-xl border border-white/30 text-white shadow-2xl z-20">
+            <div className="absolute top-4 left-4 bg-white/20 backdrop-blur-xl p-3 rounded-md border border-white/30 text-white shadow-2xl z-20">
               {subject.icon}
             </div>
             <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
           </div>
 
           {/* Mobile Content (Bottom) */}
-          <div className="p-8 flex flex-col gap-4">
+          <div className="p-8 flex flex-col gap-4 flex-grow">
             <div className="flex items-center gap-3">
               <div className="w-8 h-[2px] bg-[#419CB8] rounded-full" />
               <span className="text-[#419CB8] font-black tracking-[0.4em] uppercase text-[9px]">
@@ -72,13 +72,13 @@ function RoadmapItem({ subject, index, isActive }) {
       </div>
 
       {/* DESKTOP VIEW - SPLIT ALTERNATING LAYOUT */}
-      <div className="hidden md:flex w-full max-w-7xl px-6 md:px-12 lg:px-16 flex-row items-center md:justify-between relative z-10 pl-16 md:pl-0">
+      <div className="hidden md:flex w-full max-w-7xl px-6 md:px-12 lg:px-16 flex-row items-stretch md:justify-between relative z-10 pl-16 md:pl-0">
 
         {/* Left Side (Description for Even, Image for Odd) */}
         <div className={`w-full md:w-[44%] transition-all duration-1000 transform ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-16 md:-translate-x-32'} order-2 md:order-1`}>
           {isEven ? (
             /* Description Panel on Left */
-            <div className="bg-white p-8 md:p-12 lg:p-14 rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_40px_80px_rgba(0,0,0,0.06)] border border-gray-100/50 flex flex-col justify-center min-h-[300px] md:min-h-[450px]">
+            <div className="bg-white p-8 md:p-12 lg:p-14 rounded-md shadow-[0_40px_80px_rgba(0,0,0,0.06)] border border-gray-100/50 flex flex-col justify-center h-full md:min-h-[550px]">
               <div className="flex flex-col gap-5">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-[2px] bg-[#419CB8] rounded-full" />
@@ -96,7 +96,7 @@ function RoadmapItem({ subject, index, isActive }) {
             </div>
           ) : (
             /* Image Panel on Left */
-            <div className="relative w-full aspect-[4/3] md:min-h-[450px] overflow-hidden rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_40px_80px_rgba(0,0,0,0.08)] border border-gray-100">
+            <div className="relative w-full md:min-h-[550px] h-full overflow-hidden rounded-md shadow-[0_40px_80px_rgba(0,0,0,0.08)] border border-gray-100">
               {subject.image && (
                 <div className="absolute inset-0">
                   <img
@@ -107,7 +107,7 @@ function RoadmapItem({ subject, index, isActive }) {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
                 </div>
               )}
-              <div className="absolute top-6 left-6 bg-white/20 backdrop-blur-xl p-4 rounded-2xl border border-white/30 text-white shadow-2xl z-20">
+              <div className="absolute top-6 left-6 bg-white/20 backdrop-blur-xl p-4 rounded-md border border-white/30 text-white shadow-2xl z-20">
                 {subject.icon}
               </div>
             </div>
@@ -118,7 +118,7 @@ function RoadmapItem({ subject, index, isActive }) {
         <div className={`w-full md:w-[44%] transition-all duration-1000 transform ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-16 md:translate-x-32'} order-1 md:order-3`}>
           {!isEven ? (
             /* Description Panel on Right */
-            <div className="bg-white p-8 md:p-12 lg:p-14 rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_40px_80px_rgba(0,0,0,0.06)] border border-gray-100/50 flex flex-col justify-center min-h-[300px] md:min-h-[450px]">
+            <div className="bg-white p-8 md:p-12 lg:p-14 rounded-md shadow-[0_40px_80px_rgba(0,0,0,0.06)] border border-gray-100/50 flex flex-col justify-center h-full md:min-h-[550px]">
               <div className="flex flex-col gap-5">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-[2px] bg-[#419CB8] rounded-full" />
@@ -136,7 +136,7 @@ function RoadmapItem({ subject, index, isActive }) {
             </div>
           ) : (
             /* Image Panel on Right */
-            <div className="relative w-full aspect-[4/3] md:min-h-[450px] overflow-hidden rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_40px_80px_rgba(0,0,0,0.08)] border border-gray-100">
+            <div className="relative w-full md:min-h-[550px] h-full overflow-hidden rounded-md shadow-[0_40px_80px_rgba(0,0,0,0.08)] border border-gray-100">
               {subject.image && (
                 <div className="absolute inset-0">
                   <img
@@ -147,7 +147,7 @@ function RoadmapItem({ subject, index, isActive }) {
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
                 </div>
               )}
-              <div className="absolute top-6 left-6 bg-white/20 backdrop-blur-xl p-4 rounded-2xl border border-white/30 text-white shadow-2xl z-20">
+              <div className="absolute top-6 left-6 bg-white/20 backdrop-blur-xl p-4 rounded-md border border-white/30 text-white shadow-2xl z-20">
                 {subject.icon}
               </div>
             </div>
