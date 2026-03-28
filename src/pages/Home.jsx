@@ -85,10 +85,10 @@ export default function Home() {
         },
         python: {
             title: 'String Operations',
-            prefix: 'course = "CompE";\nprint("Hello " + ',
+            prefix: 'course = "CompE";\nprint("Hello, " + ',
             suffix: ')',
             answer: 'course',
-            expectedOutput: 'Hello CompE',
+            expectedOutput: 'Hello, CompE',
             display: 'main.py'
         }
     };
