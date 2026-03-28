@@ -22,7 +22,7 @@ function RoadmapItem({ subject, index, isActive }) {
   const isEven = index % 2 === 0;
 
   return (
-    <div className={`relative w-full min-h-[500px] md:min-h-[600px] flex items-center justify-center py-16 md:py-32 group`}>
+    <div className="relative w-full min-h-[400px] md:min-h-[600px] flex items-center justify-center py-12 md:py-24 group">
 
       {/* Central Road Node */}
       <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 z-30 transition-all duration-700">
@@ -32,30 +32,71 @@ function RoadmapItem({ subject, index, isActive }) {
         )}
       </div>
 
-      {/* Horizontal Connection Stem - SYMMETRIC FIX */}
-      <div
-        className={`absolute left-[34px] md:left-1/2 top-1/2 -translate-y-1/2 z-20 transition-all duration-1000 ease-out ${isActive ? 'opacity-100' : 'opacity-0'}`}
-        style={{
-          width: 'clamp(40px, 15vw, 200px)',
-          // Perfectly symmetric translate offsets for both sides
-          transform: `translateX(${window.innerWidth < 768 ? '0px' : (isEven ? '16px' : 'calc(-100% - 16px)')})`,
-        }}
-      >
-        <div className="h-[2px] bg-[#419CB8] md:bg-gradient-to-r md:from-[#419CB8] md:to-[#419CB8]/20 w-full" />
+      {/* MOBILE VIEW - UNIFIED CARD (Reference Design) */}
+      <div className="md:hidden w-full px-6 relative z-10 pl-16">
+        {/* Horizontal Connection Line for Mobile */}
+        <div className={`absolute left-[24px] top-1/2 -translate-y-1/2 w-10 h-[2px] bg-[#419CB8] transition-all duration-700 ${isActive ? 'opacity-100' : 'opacity-0'}`} />
+
+        <div className={`w-full bg-white rounded-[2.5rem] shadow-[0_30px_60px_rgba(0,0,0,0.08)] border border-gray-100 overflow-hidden transition-all duration-1000 transform ${isActive ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
+          {/* Mobile Image (Top) */}
+          <div className="relative w-full h-[220px] overflow-hidden">
+            {subject.image && (
+              <img
+                src={subject.image}
+                alt={subject.title}
+                className="w-full h-full object-cover"
+              />
+            )}
+            <div className="absolute top-4 left-4 bg-white/20 backdrop-blur-xl p-3 rounded-xl border border-white/30 text-white shadow-2xl z-20">
+              {subject.icon}
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
+          </div>
+
+          {/* Mobile Content (Bottom) */}
+          <div className="p-8 flex flex-col gap-4">
+            <div className="flex items-center gap-3">
+              <div className="w-8 h-[2px] bg-[#419CB8] rounded-full" />
+              <span className="text-[#419CB8] font-black tracking-[0.4em] uppercase text-[9px]">
+                Step 0{index + 1}
+              </span>
+            </div>
+            <h3 className="font-['Space_Grotesk'] font-black text-2xl text-[#1e293b] uppercase tracking-tighter leading-none">
+              {subject.title}
+            </h3>
+            <p className="text-gray-500 text-sm leading-relaxed font-medium text-justify opacity-90">
+              {subject.description}
+            </p>
+          </div>
+        </div>
       </div>
 
-      {/* Spacious Side-by-Side Content Container */}
-      <div className={`w-full max-w-screen-2xl px-6 md:px-24 flex flex-col ${isEven ? 'md:flex-row' : 'md:flex-row-reverse'} items-center gap-12 md:gap-40 lg:gap-56 relative z-10 pl-20 md:pl-0`}>
+      {/* DESKTOP VIEW - SPLIT ALTERNATING LAYOUT */}
+      <div className="hidden md:flex w-full max-w-7xl px-6 md:px-12 lg:px-16 flex-row items-center md:justify-between relative z-10 pl-16 md:pl-0">
 
-        {/* Symmetric Spacer for the Road Area */}
-        <div className="hidden md:block w-1/2" />
-
-        {/* COMPACT SIDE-BY-SIDE CARD - ADDED SYMMETRIC SPACING */}
-        <div className={`w-full md:w-1/2 transition-all duration-1000 transform ${isActive ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-32 md:translate-y-48 scale-90 md:scale-95'} ${isEven ? 'md:pl-8' : 'md:pr-8'}`}>
-          <div className="relative w-full bg-white rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_60px_120px_rgba(0,0,0,0.1)] border border-gray-100 overflow-hidden flex flex-col lg:flex-row items-stretch min-h-[420px] md:min-h-[450px]">
-
-            {/* Image Side (50%) */}
-            <div className={`w-full lg:w-1/2 h-[200px] md:h-[240px] lg:h-auto relative overflow-hidden shrink-0 ${isEven ? 'lg:order-1' : 'lg:order-2'}`}>
+        {/* Left Side (Description for Even, Image for Odd) */}
+        <div className={`w-full md:w-[44%] transition-all duration-1000 transform ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-16 md:-translate-x-32'} order-2 md:order-1`}>
+          {isEven ? (
+            /* Description Panel on Left */
+            <div className="bg-white p-8 md:p-12 lg:p-14 rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_40px_80px_rgba(0,0,0,0.06)] border border-gray-100/50 flex flex-col justify-center min-h-[300px] md:min-h-[450px]">
+              <div className="flex flex-col gap-5">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-[2px] bg-[#419CB8] rounded-full" />
+                  <span className="text-[#419CB8] font-black tracking-[0.4em] uppercase text-[10px] md:text-xs">
+                    Step 0{index + 1}
+                  </span>
+                </div>
+                <h3 className="font-['Space_Grotesk'] font-black text-2xl md:text-3xl lg:text-5xl text-[#1e293b] uppercase tracking-tighter leading-none mb-2">
+                  {subject.title}
+                </h3>
+                <p className="text-gray-500 text-sm md:text-lg lg:text-xl leading-relaxed font-medium text-justify opacity-90">
+                  {subject.description}
+                </p>
+              </div>
+            </div>
+          ) : (
+            /* Image Panel on Left */
+            <div className="relative w-full aspect-[4/3] md:min-h-[450px] overflow-hidden rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_40px_80px_rgba(0,0,0,0.08)] border border-gray-100">
               {subject.image && (
                 <div className="absolute inset-0">
                   <img
@@ -63,41 +104,62 @@ function RoadmapItem({ subject, index, isActive }) {
                     alt={subject.title}
                     className="w-full h-full object-cover transition-transform duration-[5s] ease-out group-hover:scale-110"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent opacity-30" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
                 </div>
               )}
-              <div className="absolute top-4 left-4 md:top-6 md:left-6 bg-white/20 backdrop-blur-xl p-3 md:p-4 rounded-xl md:rounded-2xl border border-white/30 text-white shadow-2xl z-20">
+              <div className="absolute top-6 left-6 bg-white/20 backdrop-blur-xl p-4 rounded-2xl border border-white/30 text-white shadow-2xl z-20">
                 {subject.icon}
               </div>
             </div>
+          )}
+        </div>
 
-            {/* Description Side (50%) */}
-            <div className={`w-full lg:w-1/2 p-10 md:p-12 lg:p-14 flex flex-col justify-center bg-white ${isEven ? 'lg:order-2' : 'lg:order-1'}`}>
-              <div className="flex flex-col gap-5 md:gap-7">
-                <div className="flex items-center gap-3 md:gap-5">
-                  <div className="w-10 md:w-14 h-[2px] md:h-[3px] bg-[#419CB8] rounded-full shadow-[0_0_15px_rgba(65,156,184,0.4)]" />
-                  <span className="text-[#419CB8] font-black tracking-[0.6em] md:tracking-[0.8em] uppercase text-[9px] md:text-[12px]">
+        {/* Right Side (Image for Even, Description for Odd) */}
+        <div className={`w-full md:w-[44%] transition-all duration-1000 transform ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-16 md:translate-x-32'} order-1 md:order-3`}>
+          {!isEven ? (
+            /* Description Panel on Right */
+            <div className="bg-white p-8 md:p-12 lg:p-14 rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_40px_80px_rgba(0,0,0,0.06)] border border-gray-100/50 flex flex-col justify-center min-h-[300px] md:min-h-[450px]">
+              <div className="flex flex-col gap-5">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-[2px] bg-[#419CB8] rounded-full" />
+                  <span className="text-[#419CB8] font-black tracking-[0.4em] uppercase text-[10px] md:text-xs">
                     Step 0{index + 1}
                   </span>
                 </div>
-
-                <h3 className="font-['Space_Grotesk'] font-black text-2xl md:text-3xl lg:text-5xl text-[#1e293b] uppercase tracking-tighter leading-[0.9] md:leading-[0.85] mb-2">
+                <h3 className="font-['Space_Grotesk'] font-black text-2xl md:text-3xl lg:text-5xl text-[#1e293b] uppercase tracking-tighter leading-none mb-2">
                   {subject.title}
                 </h3>
-
-                <p className="text-gray-500 text-sm md:text-xl leading-relaxed font-medium text-justify hd-text opacity-95">
+                <p className="text-gray-500 text-sm md:text-lg lg:text-xl leading-relaxed font-medium text-justify opacity-90">
                   {subject.description}
                 </p>
               </div>
             </div>
-
-          </div>
+          ) : (
+            /* Image Panel on Right */
+            <div className="relative w-full aspect-[4/3] md:min-h-[450px] overflow-hidden rounded-[2.5rem] md:rounded-[3.5rem] shadow-[0_40px_80px_rgba(0,0,0,0.08)] border border-gray-100">
+              {subject.image && (
+                <div className="absolute inset-0">
+                  <img
+                    src={subject.image}
+                    alt={subject.title}
+                    className="w-full h-full object-cover transition-transform duration-[5s] ease-out group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-60" />
+                </div>
+              )}
+              <div className="absolute top-6 left-6 bg-white/20 backdrop-blur-xl p-4 rounded-2xl border border-white/30 text-white shadow-2xl z-20">
+                {subject.icon}
+              </div>
+            </div>
+          )}
         </div>
 
       </div>
     </div>
   );
 }
+
+
 
 function Curriculum() {
   const [activeIndices, setActiveIndices] = useState([]);
