@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   RiCodeSSlashLine,
   RiLightbulbLine,
@@ -11,13 +11,115 @@ import {
   RiCpuLine,
   RiRobot2Line,
   RiRepeatLine,
-  RiDragMoveLine
+  RiArrowRightSLine,
+  RiUserFollowLine,
+  RiAwardLine,
+  RiInformationLine
 } from 'react-icons/ri';
 import { MdMemory } from 'react-icons/md';
 
-function Curriculum() {
-  const [activeSubject, setActiveSubject] = useState("programming");
+function RoadmapItem({ subject, index, isActive }) {
   const [isFlipped, setIsFlipped] = useState(false);
+  const cardRef = useRef(null);
+  const isRight = index % 2 !== 0;
+
+  return (
+    <div
+      ref={cardRef}
+      className={`relative w-full min-h-[400px] md:min-h-[500px] flex items-center justify-start md:justify-center py-8 md:py-16 group`}
+    >
+      {/* Central Node Indicator */}
+      <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 z-20 transition-all duration-700">
+        <div className={`w-5 h-5 md:w-8 md:h-8 rounded-full border-4 border-white shadow-xl transition-all duration-700 ${isActive ? 'bg-[#419CB8] scale-125 md:scale-150 shadow-[0_0_30px_rgba(65,156,184,0.8)]' : 'bg-gray-100 scale-100'}`} />
+        {isActive && (
+          <div className="absolute inset-0 rounded-full bg-[#419CB8] animate-ping opacity-30" />
+        )}
+      </div>
+
+      {/* Content Card container with Perspective */}
+      <div className={`w-full max-w-6xl pl-14 pr-4 md:px-12 flex flex-col ${isRight ? 'md:flex-row-reverse' : 'md:flex-row'} items-center gap-8 md:gap-20 perspective-1000`}>
+        {/* Mobile Milestone Number Badge */}
+
+
+        <div className="hidden md:block w-1/2" />
+        
+        <div
+          className={`w-full md:w-1/2 h-[380px] md:h-[450px] transition-all duration-1000 transform ${isActive ? 'opacity-100 translate-y-0 scale-100' : 'opacity-0 translate-y-24 scale-90'}`}
+          onClick={() => setIsFlipped(!isFlipped)}
+        >
+          <div className={`relative w-full h-full transition-all duration-700 preserve-3d cursor-pointer ${isFlipped ? 'rotate-y-180' : ''}`}>
+
+            {/* FRONT SIDE: SUBJECT IMAGE & TITLE */}
+            <div className={`absolute inset-0 backface-hidden bg-white rounded-[2.5rem] shadow-[0_30px_100px_rgba(0,0,0,0.06)] border border-white/40 flex flex-col justify-end overflow-hidden z-10 group/front`}>
+              {/* Full-bleed Subject Image */}
+              {subject.image && (
+                <div className="absolute inset-0">
+                  <img
+                    src={subject.image}
+                    alt={subject.title}
+                    className="w-full h-full object-cover transition-transform duration-[1.5s] group-hover/card:scale-110"
+                  />
+                  {/* High-intensity gradient for text readability */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-gray-900/20 to-transparent" />
+                </div>
+              )}
+
+              {/* Flip Hint Icon */}
+              <div className="absolute top-6 right-6 bg-white/20 backdrop-blur-md p-2 rounded-full text-white hover:bg-white/40 transition-all duration-300 z-20">
+                <RiRepeatLine className="w-5 h-5" />
+              </div>
+
+              <div className="relative p-8 md:p-12 z-20">
+                <div className={`text-[#419CB8] mb-4 flex ${isRight ? 'justify-start' : 'md:justify-end'}`}>
+                  <div className="bg-white/10 backdrop-blur-md p-3 rounded-2xl border border-white/20">
+                    {subject.icon}
+                  </div>
+                </div>
+
+                <h3 className={`font-['Space_Grotesk'] font-black text-2xl md:text-4xl text-white mb-2 uppercase tracking-tight ${isRight ? 'text-left' : 'md:text-right'} drop-shadow-lg`}>
+                  {subject.title}
+                </h3>
+                
+                <div className={`flex flex-col gap-2 ${isRight ? 'items-start' : 'md:items-end'}`}>
+                  <p className={`text-[#419CB8] text-[10px] md:text-xs font-black uppercase tracking-[0.3em]`}>
+                    Explore Milestone <span className="text-white opacity-50">/ 0{index + 1}</span>
+                  </p>
+                  
+                  {/* Mobile-only Tap Hint */}
+                  <div className="md:hidden flex items-center gap-2 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full border border-white/10 animate-pulse">
+                    <RiInformationLine className="w-3 h-3 text-[#419CB8]" />
+                    <span className="text-white text-[9px] font-bold uppercase tracking-widest">Tap to reveal info</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* BACK SIDE: DESCRIPTION & IMAGE PREVIEW */}
+            <div className={`absolute inset-0 backface-hidden rotate-y-180 bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl border border-sky-50 flex flex-col justify-center overflow-hidden z-20`}>
+              {/* Flip Hint Icon (Back) */}
+              <div className="absolute top-6 right-6 text-[#419CB8] opacity-50">
+                <RiRepeatLine className="w-5 h-5" />
+              </div>
+
+              <div className="h-full flex flex-col justify-center overflow-y-auto scrollbar-hide py-2">
+                <h4 className="text-[#419CB8] font-black text-lg md:text-xl uppercase tracking-tighter mb-4 flex items-center gap-2">
+                  <RiArrowRightSLine className="w-5 h-5" />
+                  Milestone Details
+                </h4>
+                <p className="text-gray-700 text-sm md:text-lg leading-relaxed font-semibold text-justify hd-text">
+                  {subject.description}
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Curriculum() {
 
   // Preload all subject images to eliminate loading delay in production (Vercel)
   useEffect(() => {
@@ -30,6 +132,13 @@ function Curriculum() {
   }, []);
 
   const subjects = [
+    {
+      id: "freshman",
+      title: "The Freshman",
+      description: "Where it all begins. Your first day as a Computer Engineering student (CpE). A step into the world of logic, circuit boards, and the promise of becoming a master architect of technology.",
+      icon: <RiUserFollowLine className="w-8 h-8 md:w-10 h-10" />,
+      image: "/assets/Freshman.png"
+    },
     {
       id: "programming",
       title: "Programming",
@@ -106,124 +215,76 @@ function Curriculum() {
       description: "This interdisciplinary field combines hardware design, electronics, and programming to create automated machines. You will learn how to integrate microcontrollers and sensors with mechanical systems to build robots that can perceive and interact with their physical environment.",
       icon: <RiRobot2Line className="w-8 h-8 md:w-10 h-10" />,
       image: "/assets/Robotics.png"
+    },
+    {
+      id: "certified",
+      title: "Certified Computer Engineer",
+      description: "Mastery achieved. You are now a licensed and certified Computer Engineer, fully equipped to design, build, and innovate at the intersection of hardware and software.",
+      icon: <RiAwardLine className="w-8 h-8 md:w-10 h-10" />,
+      image: "/assets/certified.png"
     }
   ];
 
-  const currentSubject = subjects.find(s => s.id === activeSubject) || subjects[0];
+  const [activeIndices, setActiveIndices] = useState([]);
+  const containerRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        const index = parseInt(entry.target.getAttribute('data-index'));
+        if (entry.isIntersecting) {
+          setActiveIndices(prev => [...new Set([...prev, index])].sort((a, b) => a - b));
+        }
+      });
+    }, { threshold: 0.3, rootMargin: "-10% 0px -20% 0px" });
+
+    const items = containerRef.current.querySelectorAll('.roadmap-milestone');
+    items.forEach(item => observer.observe(item));
+
+    return () => observer.disconnect();
+  }, []);
+
 
   return (
-    <div className="max-w-7xl mx-auto px-6 py-8 md:py-12">
-      {/* Header: CORE SUBJECTS on one line */}
-      <div className="mb-6 md:mb-10 w-full">
-        <div className="flex items-baseline gap-4 md:gap-6">
-          <h1 className="font-black tracking-tighter uppercase font-['Space_Grotesk'] text-4xl md:text-6xl lg:text-7xl text-[#1e293b]">
-            CORE
+    <div className="bg-[#fcfcfc] min-h-screen py-16 md:py-24 overflow-hidden scroll-smooth">
+      {/* Header: CORE SUBJECTS */}
+      <div className="max-w-7xl mx-auto px-6 mb-16 md:mb-24 text-center">
+        <div className="inline-flex flex-col items-center">
+          <h1 className="font-black tracking-tighter uppercase font-['Space_Grotesk'] text-4xl md:text-7xl lg:text-8xl text-[#1e293b] leading-none">
+            CORE <span className="text-[#419CB8]">CURRICULUM</span>
           </h1>
-          <span className="font-light tracking-[0.3em] uppercase text-[#419CB8] text-xl md:text-3xl lg:text-5xl">
-            SUBJECTS
-          </span>
-          <div className="hidden md:block h-[3px] flex-grow bg-gradient-to-r from-[#e8d5c4] via-[#faf0e6] to-transparent rounded-full mt-2" />
+          <p className="font-light tracking-[0.4em] uppercase text-gray-400 text-sm md:text-base mt-4">
+            The Computer Engineer's Journey
+          </p>
         </div>
       </div>
 
-      {/* Two Column Layout Block - Viewport-fit */}
-      <div className="flex flex-col md:flex-row gap-6 md:gap-10 items-stretch h-auto md:h-[calc(100vh-240px)] min-h-[540px] max-h-[680px] relative">
-
-        {/* Swipe Indicator for Mobile Tabs */}
-        <div className="md:hidden flex items-center justify-end gap-2 animate-pulse opacity-50 mb-2 -mt-2">
-          <span className="text-[9px] font-bold uppercase text-[#419CB8] tracking-[0.2em]">Swipe List To Browse</span>
-          <RiDragMoveLine className="w-4 h-4 text-[#419CB8]" />
+      <div ref={containerRef} className="relative max-w-7xl mx-auto pb-64">
+        {/* Central Vertical Road Line (Responsive positioning) */}
+        <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 top-0 h-[calc(100%-480px)] w-[3px] md:w-[6px] bg-gray-100/50 z-0 rounded-full overflow-hidden">
+          {/* Animated Glowing Path */}
+          <div
+            className="absolute top-0 left-0 w-full bg-gradient-to-b from-[#419CB8] via-[#419CB8] to-[#419CB8]/10 shadow-[0_0_20px_rgba(65,156,184,0.4)] transition-all duration-1000 ease-out z-10"
+            style={{
+              height: activeIndices.length > 0
+                ? `${((activeIndices[activeIndices.length - 1] + 1) / subjects.length) * 100}%`
+                : '0%'
+            }}
+          />
         </div>
 
-        {/* Left Side */}
-        <div className="w-full md:w-2/5 flex flex-row md:flex-col gap-2 md:gap-3 overflow-x-auto md:overflow-x-visible md:overflow-y-auto pb-4 md:pb-4 md:pr-4 md:pl-1 scrollbar-hide shrink-0">
-
-          {subjects.map((subject) => (
-            <button
-              key={subject.id}
-              onClick={() => {
-                setActiveSubject(subject.id);
-                setIsFlipped(false);
-              }}
-              className={`
-                whitespace-nowrap md:whitespace-normal
-                w-auto md:w-full h-[44px] md:h-[52px] text-left px-5 md:px-7 rounded-xl border transition-all duration-300 font-bold text-sm md:text-base relative group flex items-center shrink-0
-                ${activeSubject === subject.id
-                  ? 'bg-white text-[#00607a] border-l-4 border-l-[#419CB8] border-t-gray-200 border-r-gray-200 border-b-gray-200 shadow-[0_8px_30px_rgba(65,156,184,0.15)] md:transform md:translate-x-1'
-                  : 'bg-white text-gray-500 border border-gray-200 hover:text-gray-700 hover:border-l-2 hover:border-l-[#419CB8]/40 hover:shadow-sm active:scale-95'}
-              `}
-            >
-              <div className="flex items-center gap-3 md:gap-4">
-                <span className={`transition-transform duration-300 ${activeSubject === subject.id ? 'scale-110' : 'scale-90 opacity-0 group-hover:opacity-40'}`}>
-                  <div className="w-1.5 h-1.5 rounded-full bg-[#419CB8]" />
-                </span>
-                {subject.title}
-              </div>
-            </button>
+        {/* Roadmap Items */}
+        <div className="relative z-10 flex flex-col">
+          {subjects.map((subject, idx) => (
+            <div key={subject.id} data-index={idx} className="roadmap-milestone">
+              <RoadmapItem
+                subject={subject}
+                index={idx}
+                isActive={activeIndices.includes(idx)}
+              />
+            </div>
           ))}
         </div>
-
-        {/* Right Side: Description Area (Flippable Card) */}
-        <div className="w-full md:w-3/5 perspective-1000 h-[450px] md:h-full">
-          <div
-            className={`relative w-full h-full transition-all duration-500 preserve-3d cursor-pointer ${isFlipped ? 'rotate-y-180' : ''}`}
-            onClick={() => setIsFlipped(!isFlipped)}
-          >
-            {/* Front Side: Picture Placeholder */}
-            <div className="absolute inset-0 backface-hidden bg-white rounded-[2rem] p-6 md:p-12 shadow-[0_20px_60px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col items-center justify-center overflow-hidden">
-              {currentSubject.image ? (
-                <div className="w-full h-full relative group">
-                  <img
-                    src={currentSubject.image}
-                    alt={currentSubject.title}
-                    className="w-full h-full object-cover rounded-2xl transition-transform duration-700 group-hover:scale-105"
-                  />
-                  <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500 rounded-2xl" />
-
-                  {/* Flip Indicator (Front) */}
-                  <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-white/90 backdrop-blur-sm p-3 rounded-full shadow-lg text-[#419CB8] opacity-100 md:opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-0 md:translate-y-2 group-hover:translate-y-0 z-20">
-                    <RiRepeatLine className="w-5 h-5" />
-                  </div>
-                </div>
-              ) : (
-                <div className="w-full h-full bg-sky-50 rounded-2xl flex flex-col items-center justify-center border-2 border-dashed border-sky-200 group">
-                  <div className="mb-6 text-[#419CB8] p-6 bg-white rounded-full shadow-sm group-hover:scale-110 transition-transform duration-500">
-                    {currentSubject.icon}
-                  </div>
-                  <p className="text-[#419CB8] font-bold text-xl tracking-tight uppercase text-center">Subject Preview Image</p>
-                  <p className="text-gray-400 text-sm mt-2">Click to reveal details</p>
-                </div>
-              )}
-            </div>
-
-            {/* Back Side: Description Content */}
-            <div className="absolute inset-0 backface-hidden back-side-flip bg-white rounded-[2rem] p-6 md:p-12 shadow-[0_20px_60px_rgba(0,0,0,0.04)] border border-gray-100 flex flex-col justify-center overflow-hidden group">
-              {/* Flip Indicator (Back) */}
-              <div className="absolute top-4 right-4 md:top-6 md:right-6 bg-sky-50 p-2 md:p-3 rounded-full shadow-sm text-[#419CB8] group-hover:scale-110 transition-transform duration-300">
-                <RiRepeatLine className="w-4 h-4 md:w-5 h-5" />
-              </div>
-
-              <div key={`${activeSubject}-${isFlipped}`} className="h-full flex flex-col justify-center max-h-full overflow-y-auto scrollbar-hide py-2">
-                <div className="mb-4 md:mb-8 text-[#419CB8] opacity-0 animate-fade-in-up [animation-delay:100ms] [animation-fill-mode:forwards]">
-                  <span className="bg-sky-50 p-2 md:p-4 rounded-2xl inline-block">
-                    {currentSubject.icon}
-                  </span>
-                </div>
-
-                <h2 className="text-xl md:text-4xl font-black text-gray-900 mb-3 md:mb-8 uppercase tracking-tight leading-none opacity-0 animate-fade-in-up [animation-delay:200ms] [animation-fill-mode:forwards] hd-text">
-                  {currentSubject.title}
-                </h2>
-
-                <div className="text-slate-900 font-semibold text-sm md:text-lg leading-relaxed max-w-xl opacity-0 animate-fade-in-up [animation-delay:300ms] [animation-fill-mode:forwards] hd-text antialiased text-justify">
-                  {currentSubject.description}
-                </div>
-
-                {/* Removed View Course Details per request to keep it purely static/front-end focused */}
-              </div>
-            </div>
-          </div>
-        </div>
-
       </div>
 
       <style dangerouslySetInnerHTML={{
@@ -239,45 +300,26 @@ function Curriculum() {
         .backface-hidden {
           backface-visibility: hidden;
           -webkit-backface-visibility: hidden;
-          /* Force GPU rendering for sharpness */
-          transform: translate3d(0, 0, 0);
-          -webkit-transform: translate3d(0, 0, 0);
         }
         .rotate-y-180 {
           transform: rotateY(180deg);
           -webkit-transform: rotateY(180deg);
         }
-        
-        /* High-Definition 3D positioning */
-        .back-side-flip {
-          transform: rotateY(180deg) translateZ(1px);
-          -webkit-transform: rotateY(180deg) translateZ(1px);
-          will-change: transform;
-        }
 
         @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(15px) translateZ(0);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) translateZ(0);
-          }
+          from { opacity: 0; transform: translateY(40px); }
+          to { opacity: 1; transform: translateY(0); }
         }
         
-        .animate-fade-in-up {
-          animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-        }
-
         .hd-text {
           -webkit-font-smoothing: antialiased;
           -moz-osx-font-smoothing: grayscale;
-          text-rendering: geometricPrecision;
-          /* Force Chrome to render text sharply on transformed elements with subpixel positioning */
-          transform: translate3d(0, 0, 0) scale(1.0001);
-          will-change: transform;
           letter-spacing: 0.01em;
+        }
+
+        /* Smooth scroll optimization */
+        html {
+          scroll-behavior: smooth;
         }
 
         /* Hide scrollbar completely */
