@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import {
   RiCodeSSlashLine,
   RiLightbulbLine,
@@ -306,6 +307,9 @@ function Curriculum() {
       milestoneElements.forEach((el, index) => {
         const rect = el.getBoundingClientRect();
         let progress = (viewportCenter - rect.top) / rect.height;
+        if (index === subjects.length - 1) {
+          progress *= 2;
+        }
         progress = Math.max(0, Math.min(1, progress));
 
         if (progress > 0.1) {
@@ -330,10 +334,8 @@ function Curriculum() {
         const targetEl = milestoneElements[maxProgressIdx];
         const targetRect = targetEl.getBoundingClientRect();
 
-        // Cap the orb at the node center (50%) for the very last milestone
-        const cappedProgress = maxProgressIdx === subjects.length - 1
-          ? Math.min(0.5, maxProgressVal)
-          : maxProgressVal;
+        // Let the orb glide to the bottom of the final milestone
+        const cappedProgress = maxProgressVal;
 
         const absoluteTop = (targetRect.top - containerRect.top) + (targetRect.height * cappedProgress);
 
@@ -348,9 +350,9 @@ function Curriculum() {
   }, [subjects.length]);
 
   return (
-    <div className="bg-[#fcfcfc] min-h-screen pt-20 md:pt-40 overflow-hidden scroll-smooth">
+    <div className="bg-[#fcfcfc] min-h-screen pt-12 md:pt-16 overflow-hidden scroll-smooth">
       {/* Cinematic Header Section */}
-      <div className="max-w-7xl mx-auto px-6 mb-16 md:mb-32 text-center relative z-10">
+      <div className="max-w-7xl mx-auto px-6 mb-12 md:mb-20 text-center relative z-10">
         <div className="flex flex-col items-center relative py-10 md:py-20 w-full rounded-md overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.10)]">
           {/* Background Image Container with Gradient Fade */}
           <div className="absolute inset-0 -z-10 w-full h-full overflow-hidden">
@@ -380,38 +382,52 @@ function Curriculum() {
       {/* Roadmap Section with #EEEEEE background */}
       <div className="bg-[#EEEEEE] rounded-md mx-6 md:mx-12 mb-16 md:mb-32">
         <div ref={containerRef} className="relative w-full max-w-screen-2xl mx-auto pb-48 md:pb-96">
-        {/* Global Neon Orb - Glides through the entire roadmap path with a subtle glow */}
-        {orbTop > 0 && (
-          <div
-            className="absolute left-[24px] md:left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 md:w-8 md:h-8 bg-white rounded-full z-40 shadow-[0_0_15px_rgba(65,156,184,0.6)] border-2 border-white transition-all duration-300 ease-out pointer-events-none"
-            style={{
-              top: `${orbTop}px`,
-              filter: 'drop-shadow(0 0 8px rgba(65,156,184,0.3))'
-            }}
-          />
-        )}
+          {/* Global Neon Orb - Glides through the entire roadmap path with a subtle glow */}
+          {orbTop > 0 && (
+            <div
+              className="absolute left-[24px] md:left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 md:w-8 md:h-8 bg-white rounded-full z-40 shadow-[0_0_15px_rgba(65,156,184,0.6)] border-2 border-white transition-all duration-300 ease-out pointer-events-none"
+              style={{
+                top: `${orbTop}px`,
+                filter: 'drop-shadow(0 0 8px rgba(65,156,184,0.3))'
+              }}
+            />
+          )}
 
-        <div className="relative z-10 flex flex-col">
-          {subjects.map((subject, idx) => {
-            const ratio = milestoneRatios[idx] || 0;
-            // A simple logic: if a milestone *after* this one has any progress, this one is 100% full
-            const isCompleted = Object.entries(milestoneRatios).some(([id, r]) => parseInt(id) > idx && r > 0);
-            const progress = isCompleted ? 1 : ratio;
+          <div className="relative z-10 flex flex-col">
+            {subjects.map((subject, idx) => {
+              const ratio = milestoneRatios[idx] || 0;
+              // A simple logic: if a milestone *after* this one has any progress, this one is 100% full
+              const isCompleted = Object.entries(milestoneRatios).some(([id, r]) => parseInt(id) > idx && r > 0);
+              const progress = isCompleted ? 1 : ratio;
 
-            return (
-              <div key={subject.id} data-index={idx} className="roadmap-milestone mb-[-1px]">
-                <RoadmapItem
-                  subject={subject}
-                  index={idx}
-                  isActive={activeIndices.includes(idx)}
-                  isFirst={idx === 0}
-                  isLast={idx === subjects.length - 1}
-                  progress={progress >= 0.99 ? 1 : progress}
-                />
-              </div>
-            );
-          })}
-        </div>
+              return (
+                <div key={subject.id} data-index={idx} className="roadmap-milestone mb-[-1px]">
+                  <RoadmapItem
+                    subject={subject}
+                    index={idx}
+                    isActive={activeIndices.includes(idx)}
+                    isFirst={idx === 0}
+                    isLast={false}
+                    progress={progress >= 0.99 ? 1 : progress}
+                  />
+                </div>
+              );
+            })}
+
+            {/* Final Connect to Careers Button */}
+            <div className="relative w-full flex flex-col items-center justify-center pb-12 z-20">
+              {/* Connector from end of roadmap to button */}
+              <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 top-0 w-[4px] md:w-[8px] h-12 bg-[#419CB8] shadow-[0_0_10px_rgba(65,156,184,0.3)] z-0" />
+              
+              <Link
+                to="/careers"
+                className="relative z-20 mt-12 bg-white text-[#419CB8] border-2 border-[#419CB8] font-black py-4 px-8 md:px-12 rounded-full shadow-[0_10px_30px_rgba(65,156,184,0.15)] hover:bg-[#419CB8] hover:text-white hover:scale-105 hover:-translate-y-1 transition-all duration-300 flex items-center gap-3 uppercase tracking-widest text-xs md:text-sm group"
+              >
+                <span>Explore Careers</span>
+                <RiArrowRightSLine className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
 
