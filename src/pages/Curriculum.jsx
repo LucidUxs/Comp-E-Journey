@@ -187,6 +187,7 @@ function Curriculum() {
   const [activeIndices, setActiveIndices] = useState([]);
   const [milestoneRatios, setMilestoneRatios] = useState({});
   const [orbTop, setOrbTop] = useState(0);
+  const [isButtonGlowing, setIsButtonGlowing] = useState(false);
   const containerRef = useRef(null);
 
   const subjects = [
@@ -312,7 +313,7 @@ function Curriculum() {
         }
         progress = Math.max(0, Math.min(1, progress));
 
-        if (progress > 0.1) {
+        if (progress >= 0.5) {
           setActiveIndices(prev => [...new Set([...prev, index])].sort((a, b) => a - b));
         }
 
@@ -345,6 +346,10 @@ function Curriculum() {
           const maxDrop = isMobile ? 32 : 48; // h-8 (32px) on mobile, h-12 (48px) on desktop
           const maxAbsolute = (targetRect.top - containerRect.top) + maxDrop;
           absoluteTop = Math.min(absoluteTop, maxAbsolute);
+          
+          if (absoluteTop >= maxAbsolute - 1) {
+            setIsButtonGlowing(true);
+          }
         }
 
         setOrbTop(prev => Math.max(prev, absoluteTop)); // One-way orb too
@@ -393,10 +398,10 @@ function Curriculum() {
           {/* Global Neon Orb - Glides through the entire roadmap path with a subtle glow */}
           {orbTop > 0 && (
             <div
-              className="absolute left-[24px] md:left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 md:w-8 md:h-8 bg-white rounded-full z-40 shadow-[0_0_15px_rgba(65,156,184,0.6)] border-2 border-white transition-all duration-300 ease-out pointer-events-none"
+              className={`absolute left-[24px] md:left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 md:w-8 md:h-8 bg-white rounded-full z-40 border-2 border-white transition-all duration-300 ease-out pointer-events-none ${isButtonGlowing ? 'opacity-0 scale-50 shadow-none' : 'opacity-100 scale-100 shadow-[0_0_15px_rgba(65,156,184,0.6)]'}`}
               style={{
                 top: `${orbTop}px`,
-                filter: 'drop-shadow(0 0 8px rgba(65,156,184,0.3))'
+                filter: isButtonGlowing ? 'none' : 'drop-shadow(0 0 8px rgba(65,156,184,0.3))'
               }}
             />
           )}
@@ -433,7 +438,11 @@ function Curriculum() {
               <div className="pt-8 md:mt-12 md:pt-0 w-full px-6 md:px-0 md:w-auto">
                 <Link
                   to="/careers"
-                  className="w-full md:w-auto relative z-20 bg-white text-[#419CB8] border-2 border-[#419CB8] font-black py-4 px-8 md:px-12 rounded-full shadow-[0_10px_30px_rgba(65,156,184,0.15)] hover:bg-[#419CB8] hover:text-white hover:scale-105 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 uppercase tracking-widest text-xs md:text-sm group"
+                  className={`w-full md:w-auto relative z-20 font-black py-4 px-8 md:px-12 rounded-full hover:-translate-y-1 transition-all duration-500 flex items-center justify-center gap-3 uppercase tracking-widest text-xs md:text-sm group ${
+                    isButtonGlowing
+                      ? 'bg-[#419CB8] text-white shadow-[0_0_40px_rgba(65,156,184,0.8)] scale-105 border-2 border-[#419CB8]'
+                      : 'bg-white text-[#419CB8] border-2 border-[#419CB8] shadow-[0_10px_30px_rgba(65,156,184,0.15)] hover:bg-[#419CB8] hover:text-white hover:scale-105'
+                  }`}
                 >
                 <span>Explore Careers</span>
                 <RiArrowRightSLine className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
