@@ -124,7 +124,7 @@ export default function Home() {
                         COMPUTER <br />
                         <span className="text-[#419CB8]">ENGINEERING</span>
                     </h1>
-                    <p className="text-gray-500 text-sm mb-10 leading-relaxed pr-8">
+                    <p className="text-gray-500 text-sm mb-10 leading-relaxed pr-8 text-justify">
                         Computer Engineering is a discipline focused on the design, development, and improvement of computer systems and digital technologies. It involves understanding how computers work at every level—from small electronic components to complex software systems—and applying that knowledge to create reliable, efficient, and innovative solutions. As freshmen in this field, you will begin exploring the principles that power modern devices, intelligent systems, and the technologies shaping the future.
                     </p>
                     <div className="flex flex-wrap gap-4">
@@ -356,7 +356,7 @@ export default function Home() {
                             WHERE HARDWARE <br />
                             <span className="text-[#419CB8]">MEETS SOFTWARE</span>
                         </h2>
-                        <p className="text-gray-500 leading-relaxed mb-6">
+                        <p className="text-gray-500 leading-relaxed mb-6 text-justify">
                             Computer Engineering isn't just about building circuits or writing code — it's about the interaction between the two. Every '0' and '1' you manipulated in the logic gate simulator above is what eventually becomes the lines of code you'll write below.
                         </p>
                         <div className="grid grid-cols-2 gap-4">
