@@ -93,7 +93,7 @@ function RoadmapItem({ subject, index, isActive, isFirst, isLast, progress = 0 }
       </div>
 
       {/* DESKTOP VIEW - SPLIT ALTERNATING LAYOUT */}
-      <div className="hidden md:flex w-full max-w-7xl px-6 md:px-12 lg:px-16 flex-row items-stretch md:justify-between relative z-10 pl-16 md:pl-0">
+      <div className="hidden md:flex w-full max-w-7xl mx-auto px-6 md:px-12 lg:px-16 flex-row items-stretch md:justify-between relative z-10 pl-16 md:pl-0">
 
         {/* Left Side (Description for Even, Image for Odd) */}
         <div className={`w-full md:w-[44%] transition-all duration-1000 transform ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-16 md:-translate-x-32'} order-2 md:order-1`}>
@@ -357,7 +357,7 @@ function Curriculum() {
             <img
               src="/assets/bg.png"
               alt=""
-              className="w-full h-full object-cover opacity-30 mix-blend-multiply transition-opacity duration-1000"
+              className="w-full h-[300px] md:h-full object-cover object-[center_center] md:object-cover opacity-30 mix-blend-multiply transition-opacity duration-1000 min-h-full"
               id="header-bg-image"
             />
             {/* Radial Gradient to clear the center for text */}
