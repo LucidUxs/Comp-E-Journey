@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { RiDragMoveLine, RiArrowLeftSLine, RiArrowRightSLine, RiDoubleQuotesL } from 'react-icons/ri';
+import { MdSwipe } from 'react-icons/md';
 import useScrollReveal from '../hooks/useScrollReveal';
 
 const RESUME_DELAY = 2000;
@@ -459,8 +460,8 @@ function Careers() {
       <div className="flex flex-col gap-12 relative bg-[#EEEEEE] py-12 md:py-24 mb-20 md:mb-32">
         {/* Swipe Indicator + Row 1 */}
         <div ref={row1Ref} className={`flex flex-col gap-4 reveal ${row1Visible ? 'reveal-active' : ''}`} style={{ transitionDelay: '150ms' }}>
-          <div className="md:hidden flex flex-col items-center gap-2 pointer-events-none animate-bounce opacity-50">
-            <RiDragMoveLine className="w-8 h-8 text-[#419CB8]" />
+          <div className="md:hidden flex flex-col items-center gap-2 pointer-events-none opacity-50 mb-4">
+            <MdSwipe className="w-8 h-8 text-[#419CB8] animate-[swipeHint_2s_ease-in-out_infinite]" />
             <span className="text-[10px] font-black uppercase text-[#419CB8] tracking-widest">Swipe to Explore</span>
           </div>
           <ScrollingRow items={topRow} baseSpeed={0.8} />
