@@ -641,9 +641,7 @@ export default function Home() {
                     READY TO START <br className="hidden md:block" /> YOUR <span className="text-[#419CB8]">ENGINEERING</span> LEGACY?
                 </h2>
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <Link to="/join" className="w-full sm:w-auto bg-[#00607a] hover:bg-[#004e63] text-white px-10 py-3.5 rounded-sm shadow-md font-bold text-[11px] tracking-widest transition-colors uppercase">
-                        JOIN NOW
-                    </Link>
+
                     <Link to="/curriculum" className="w-full sm:w-auto bg-white hover:bg-[#FFF1DC] hover:text-[#00607a] text-gray-700 border border-gray-200 px-10 py-3.5 rounded-sm font-bold text-[11px] tracking-widest transition-colors uppercase">
                         VIEW CURRICULUM
                     </Link>

@@ -40,15 +40,7 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* Desktop Join Button */}
-        <div className="hidden md:block">
-          <Link
-            to="/join"
-            className="bg-[#00607a] hover:bg-[#004e63] text-white px-8 py-2.5 rounded-sm font-bold text-[10px] tracking-widest transition-all shadow-md hover:shadow-[#00607a]/20 uppercase"
-          >
-            JOIN NOW
-          </Link>
-        </div>
+
 
         {/* Mobile Toggle Button */}
         <button
@@ -74,13 +66,7 @@ export default function Navbar() {
               {link.name}
             </Link>
           ))}
-          <Link
-            to="/join"
-            onClick={() => setIsOpen(false)}
-            className="w-full max-w-[200px] text-center bg-[#00607a] text-white py-4 rounded-sm font-black text-sm tracking-widest uppercase mt-4 shadow-xl"
-          >
-            JOIN NOW
-          </Link>
+
         </div>
       </div>
     </nav>
