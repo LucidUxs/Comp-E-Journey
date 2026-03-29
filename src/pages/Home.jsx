@@ -220,7 +220,9 @@ export default function Home() {
             </section>
 
             {/* Logic Gates Section */}
+            {/* Logic Gates Section */}
             <section ref={logicRef} className={`bg-[#f6f6f6] max-w-6xl mx-auto py-12 px-6 reveal ${logicVisible ? 'reveal-active' : ''}`}>
+
                 <div className="mb-10">
                     <div className="flex flex-col mb-2">
                         <div className="flex items-center gap-3">
@@ -342,7 +344,9 @@ export default function Home() {
             </section>
 
             {/* Bridge: Hardware to Software */}
+            {/* Bridge: Hardware to Software */}
             <section ref={bridgeRef} className={`py-20 px-6 bg-white reveal ${bridgeVisible ? 'reveal-active' : ''}`}>
+
                 <div className="max-w-6xl mx-auto flex flex-col md:flex-row items-center gap-16">
                     <div className="w-full md:w-1/2">
                         <div className="inline-block px-4 py-1.5 rounded-full bg-[#419CB8]/10 text-[#419CB8] text-[10px] font-black tracking-widest uppercase mb-6">
@@ -367,12 +371,22 @@ export default function Home() {
                         </div>
                     </div>
                     <div className="w-full md:w-1/2 relative">
+                        <div className="absolute inset-0 bg-[#419CB8]/15 blur-[80px] rounded-full pointer-events-none scale-75"></div>
                         <div
-                            className="overflow-hidden shadow-[0_30px_80px_rgba(0,0,0,0.2)] transition-transform duration-700 hover:rotate-0"
-                            style={{ transform: 'perspective(1200px) rotateY(-12deg) rotateX(4deg)' }}
+                            className="relative overflow-hidden shadow-[0_40px_100px_rgba(0,0,0,0.25),0_10px_40px_rgba(65,156,184,0.3)] transition-transform duration-700 hover:rotate-0"
+                            style={{ 
+                                transform: windowWidth < 768 
+                                    ? 'none' 
+                                    : 'perspective(1200px) rotateY(-12deg) rotateX(4deg)' 
+                            }}
                         >
+                            {/* Source Attribution Label */}
+                            <div className="absolute bottom-3 right-3 bg-black/50 backdrop-blur-md px-2.5 py-1 rounded-full text-[9px] text-white/80 font-mono z-20 tracking-widest uppercase border border-white/10">
+                                Source: wokwi.com
+                            </div>
+
                             <img
-                                src="/assets/hardware_meets_software.png"
+                                src="/assets/wokwi_example.gif"
                                 alt="Hardware meets software — circuit board blending into code"
                                 loading="lazy"
                                 className="w-full h-full object-cover rounded-md"
@@ -383,7 +397,9 @@ export default function Home() {
             </section>
 
             {/* Programming Section */}
+            {/* Programming Section */}
             <section ref={progRef} className={`bg-[#eeeeee] py-16 px-6 mt-4 relative reveal ${progVisible ? 'reveal-active' : ''}`}>
+
                 <div className="max-w-6xl mx-auto">
                     <div className="flex flex-col mb-4">
                         <div className="flex items-center gap-3 mb-2 lg:justify-end">
