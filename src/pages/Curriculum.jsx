@@ -18,17 +18,49 @@ import {
 } from 'react-icons/ri';
 import { MdMemory } from 'react-icons/md';
 
-function RoadmapItem({ subject, index, isActive }) {
+function RoadmapItem({ subject, index, isActive, isFirst, isLast, progress = 0, showTip }) {
   const isEven = index % 2 === 0;
+
+  // Calculate segment fills based on progress (0-1)
+  // Progress 0-0.5 fills top half, 0.5-1 fills bottom half
+  const topFill = Math.min(100, progress * 200);
+  const bottomFill = Math.max(0, (progress - 0.5) * 200);
 
   return (
     <div className="relative w-full min-h-[400px] md:min-h-[600px] flex items-center justify-center py-12 md:py-24 group">
+      
+      {/* Connector Lines (Vertical) */}
+      <div className={`absolute left-[24px] md:left-1/2 -translate-x-1/2 w-[4px] md:w-[8px] z-0 ${isFirst ? 'top-1/2 bottom-0' : isLast ? 'top-0 h-1/2' : 'top-0 bottom-0'}`}>
+        {/* Gray Background Line */}
+        <div className="absolute inset-0 bg-gray-100/50" />
+        
+        {/* Blue Progress Line (Smooth + Neon Glow) */}
+        <div 
+          className="absolute top-0 left-0 right-0 bg-[#419CB8] transition-all duration-300 ease-out z-10 shadow-[0_0_20px_rgba(65,156,184,0.6)]" 
+          style={{ height: progress >= 0.99 ? '101%' : `${progress * 100}%` }}
+        />
 
-      {/* Central Road Node */}
+        {/* Glowing Tip (Neon Circle - Improved Visibility) */}
+        {showTip && (
+          <div 
+            className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 md:w-8 md:h-8 bg-white rounded-full z-30 shadow-[0_0_15px_#419CB8,0_0_30px_#419CB8,0_0_50px_#419CB8] border-2 border-white"
+            style={{ 
+              top: `${progress * 100}%`,
+              filter: 'drop-shadow(0 0 10px #419CB8)'
+            }}
+          />
+        )}
+      </div>
+
+      {/* Central Road Node (Neon Enhanced) */}
       <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 z-30 transition-all duration-700">
-        <div className={`w-6 h-6 md:w-10 md:h-10 rounded-full border-4 border-white shadow-2xl transition-all duration-700 ${isActive ? 'bg-[#419CB8] scale-125 md:scale-150 shadow-[0_0_40px_rgba(65,156,184,0.8)]' : 'bg-gray-200'}`} />
-        {isActive && (
-          <div className="absolute inset-0 rounded-full bg-[#419CB8] animate-ping opacity-20" />
+        <div className={`w-6 h-6 md:w-10 md:h-10 rounded-full border-4 transition-all duration-700 
+          ${(isFirst && progress > 0) || (isLast && progress > 0.9) || (!isFirst && !isLast && progress > 0.5) 
+            ? 'bg-[#419CB8] border-white scale-125 md:scale-150 shadow-[0_0_30px_rgba(65,156,184,0.8),0_0_60px_rgba(65,156,184,0.4)]' 
+            : 'bg-gray-200 border-white shadow-none'}`} 
+        />
+        {((isFirst && progress > 0) || (isLast && progress > 0.9) || (!isFirst && !isLast && progress > 0.5)) && (
+          <div className="absolute inset-0 rounded-full bg-[#419CB8] animate-ping opacity-30 blur-[2px]" />
         )}
       </div>
 
@@ -163,6 +195,7 @@ function RoadmapItem({ subject, index, isActive }) {
 
 function Curriculum() {
   const [activeIndices, setActiveIndices] = useState([]);
+  const [milestoneRatios, setMilestoneRatios] = useState({});
   const containerRef = useRef(null);
 
   const subjects = [
@@ -268,62 +301,96 @@ function Curriculum() {
       }
     });
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        const index = parseInt(entry.target.getAttribute('data-index'));
-        if (entry.isIntersecting) {
+    // High-Precision Scroll Tracking for Roadmap Line
+    const handleScroll = () => {
+      if (!containerRef.current) return;
+      
+      const viewportCenter = window.innerHeight / 2;
+      const milestoneElements = containerRef.current.querySelectorAll('.roadmap-milestone');
+      
+      milestoneElements.forEach((el, index) => {
+        const rect = el.getBoundingClientRect();
+        
+        // Calculate progress based on screen center (0 to 1)
+        // 0 when the milestone top enters center screen
+        // 1 when the milestone bottom reaches center screen
+        let progress = (viewportCenter - rect.top) / rect.height;
+        progress = Math.max(0, Math.min(1, progress));
+
+        // Update discrete reveal state for cards
+        if (progress > 0.1) {
           setActiveIndices(prev => [...new Set([...prev, index])].sort((a, b) => a - b));
         }
+
+        // Update continuous ratio state - keeping MAX seen for "one-way" progress
+        setMilestoneRatios(prev => {
+          if ((prev[index] || 0) >= progress) return prev;
+          return { ...prev, [index]: progress };
+        });
       });
-    }, { threshold: 0.3, rootMargin: "-10% 0px -20% 0px" });
+    };
 
-    const items = containerRef.current.querySelectorAll('.roadmap-milestone');
-    items.forEach(item => observer.observe(item));
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Initial call
 
-    return () => observer.disconnect();
+    return () => window.removeEventListener('scroll', handleScroll);
   }, [subjects.length]);
 
   return (
     <div className="bg-[#fcfcfc] min-h-screen pt-20 md:pt-40 overflow-hidden scroll-smooth">
       {/* Cinematic Header Section */}
       <div className="max-w-7xl mx-auto px-6 mb-16 md:mb-32 text-center relative z-10">
-        <div className="inline-flex flex-col items-center">
-          <div className="mb-3 flex items-center justify-center gap-4 bg-[#419CB8]/5 px-6 py-2 rounded-full border border-[#419CB8]/10 text-[#419CB8] backdrop-blur-sm">
+        <div className="inline-flex flex-col items-center relative py-10 md:py-20 w-full">
+          {/* Background Image Container with Gradient Fade */}
+          <div className="absolute inset-0 -z-10 w-full h-full overflow-hidden">
+            <img
+              src="/assets/bg.png"
+              alt=""
+              className="w-full h-full object-cover opacity-30 mix-blend-multiply transition-opacity duration-1000"
+              id="header-bg-image"
+            />
+            {/* Radial Gradient to clear the center for text */}
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] from-white/80 via-white/40 to-transparent" />
+          </div>
+          
+          <div className="mb-6 flex items-center justify-center gap-4 bg-white/80 px-6 py-2.5 rounded-full border border-[#419CB8]/20 text-[#419CB8] backdrop-blur-xl shadow-sm z-20">
             <RiInformationLine className="w-5 h-5 md:w-6 md:h-6" />
             <span className="text-[10px] md:text-sm font-black uppercase tracking-[0.4em]">Curriculum Roadmap</span>
           </div>
-          <h1 className="font-black tracking-tighter uppercase font-['Space_Grotesk'] text-4xl md:text-8xl lg:text-[10rem] text-[#1e293b] leading-[0.85] mb-4">
+          <h1 className="font-black tracking-tighter uppercase font-['Space_Grotesk'] text-4xl md:text-8xl lg:text-[10rem] text-[#1e293b] leading-[0.85] mb-6 drop-shadow-[0_4px_12px_rgba(255,255,255,0.8)] z-20">
             CORE <span className="text-[#419CB8]">JOURNEY</span>
           </h1>
-          <p className="font-light tracking-[0.3em] md:tracking-[0.5em] uppercase text-gray-400 text-xs md:text-xl max-w-2xl text-center">
+          <p className="font-medium tracking-[0.2em] md:tracking-[0.4em] uppercase text-gray-500 text-xs md:text-xl max-w-2xl text-center bg-white/30 backdrop-blur-sm rounded-lg px-4 py-1 z-20">
             Bridging Academic Excellence with Professional Mastery
           </p>
         </div>
       </div>
 
       <div ref={containerRef} className="relative w-full max-w-screen-2xl mx-auto pb-48 md:pb-96">
-        {/* Central Vertical Road Line */}
-        <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 top-0 h-[calc(100%-120px)] w-[4px] md:w-[8px] bg-gray-100/50 z-0 rounded-full overflow-hidden">
-          <div
-            className="absolute top-0 left-0 w-full bg-gradient-to-b from-[#419CB8] via-[#419CB8] to-[#419CB8]/10 shadow-[0_0_20px_rgba(65,156,184,0.4)] transition-all duration-1000 ease-out z-10"
-            style={{
-              height: activeIndices.length > 0
-                ? `${((activeIndices[activeIndices.length - 1] + 1) / subjects.length) * 100}%`
-                : '0%'
-            }}
-          />
-        </div>
-
         <div className="relative z-10 flex flex-col">
-          {subjects.map((subject, idx) => (
-            <div key={subject.id} data-index={idx} className="roadmap-milestone">
-              <RoadmapItem
-                subject={subject}
-                index={idx}
-                isActive={activeIndices.includes(idx)}
-              />
-            </div>
-          ))}
+          {subjects.map((subject, idx) => {
+            const ratio = milestoneRatios[idx] || 0;
+            // A simple logic: if a milestone *after* this one has any progress, this one is 100% full
+            const isCompleted = Object.entries(milestoneRatios).some(([id, r]) => parseInt(id) > idx && r > 0);
+            const progress = isCompleted ? 1 : ratio;
+
+            // Only show glow-tip on the CURRENT front of the line
+            const isLastActive = idx === (activeIndices.length > 0 ? Math.max(...activeIndices) : -1);
+
+            return (
+              <div key={subject.id} data-index={idx} className="roadmap-milestone">
+                <RoadmapItem
+                  subject={subject}
+                  index={idx}
+                  isActive={activeIndices.includes(idx)}
+                  isFirst={idx === 0}
+                  isLast={idx === subjects.length - 1}
+                  progress={progress}
+                  showTip={isLastActive && progress < 1 && progress > 0}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
 
