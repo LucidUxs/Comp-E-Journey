@@ -20,7 +20,7 @@ import { MdMemory } from 'react-icons/md';
 
 function RoadmapItem({ subject, index, isActive, isFirst, isLast, progress = 0 }) {
   const isEven = index % 2 === 0;
-  
+
   // For the last milestone, the container is only h-1/2 (top to node center).
   // Progress 0.5 = orb at node center = should fill container 100%.
   // So we scale: fillRatio = isLast ? progress * 2 : progress
@@ -28,15 +28,15 @@ function RoadmapItem({ subject, index, isActive, isFirst, isLast, progress = 0 }
 
   return (
     <div className="relative w-full min-h-[400px] md:min-h-[600px] flex items-center justify-center py-12 md:py-24 group">
-      
+
       {/* Connector Lines (Vertical) */}
       <div className={`absolute left-[24px] md:left-1/2 -translate-x-1/2 w-[4px] md:w-[8px] z-0 ${isFirst ? 'top-0 bottom-0' : isLast ? 'top-0 h-1/2' : 'top-0 bottom-0'}`}>
         {/* Gray Background Line */}
         <div className="absolute inset-0 bg-gray-100/50" />
-        
+
         {/* Blue Progress Line (Smooth + Subtle Neon Glow) */}
-        <div 
-          className="absolute top-0 left-0 right-0 bg-[#419CB8] transition-all duration-300 ease-out z-10 shadow-[0_0_10px_rgba(65,156,184,0.3)]" 
+        <div
+          className="absolute top-0 left-0 right-0 bg-[#419CB8] transition-all duration-300 ease-out z-10 shadow-[0_0_10px_rgba(65,156,184,0.3)]"
           style={{ height: fillRatio >= 0.99 ? '100%' : `${fillRatio * 100}%` }}
         />
       </div>
@@ -44,9 +44,9 @@ function RoadmapItem({ subject, index, isActive, isFirst, isLast, progress = 0 }
       {/* Central Road Node (Subtle Neon Enhancement) */}
       <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 transition-all duration-700">
         <div className={`w-6 h-6 md:w-10 md:h-10 rounded-full border-4 transition-all duration-700 
-          ${progress > 0.5 
-            ? 'bg-[#419CB8] border-white scale-125 md:scale-150 shadow-[0_0_20px_rgba(65,156,184,0.4)]' 
-            : 'bg-gray-200 border-white shadow-none'}`} 
+          ${progress > 0.5
+            ? 'bg-[#419CB8] border-white scale-125 md:scale-150 shadow-[0_0_20px_rgba(65,156,184,0.4)]'
+            : 'bg-gray-200 border-white shadow-none'}`}
         />
         {progress > 0.5 && (
           <div className="absolute inset-0 rounded-full bg-[#419CB8] animate-ping opacity-15 blur-[1px]" />
@@ -99,7 +99,7 @@ function RoadmapItem({ subject, index, isActive, isFirst, isLast, progress = 0 }
         <div className={`w-full md:w-[44%] transition-all duration-1000 transform ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-16 md:-translate-x-32'} order-2 md:order-1`}>
           {isEven ? (
             /* Description Panel on Left */
-            <div className="bg-white p-8 md:p-12 lg:p-14 rounded-md shadow-[0_40px_80px_rgba(0,0,0,0.06)] border border-gray-100/50 flex flex-col justify-center h-full md:min-h-[550px]">
+            <div className="bg-white p-8 md:p-12 lg:p-14 rounded-md shadow-[0_40px_80px_rgba(0,0,0,0.06)] border border-gray-100/50 flex flex-col justify-center h-full md:min-h-[550px] transition-all duration-500 ease-out hover:[transform:perspective(1200px)_rotateY(0deg)]" style={{ transform: 'perspective(1200px) rotateY(5deg)', transformOrigin: 'center center' }}>
               <div className="flex flex-col gap-5">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-[2px] bg-[#419CB8] rounded-full" />
@@ -117,7 +117,7 @@ function RoadmapItem({ subject, index, isActive, isFirst, isLast, progress = 0 }
             </div>
           ) : (
             /* Image Panel on Left */
-            <div className="relative w-full md:min-h-[550px] h-full overflow-hidden rounded-md shadow-[0_40px_80px_rgba(0,0,0,0.08)] border border-gray-100">
+            <div className="relative w-full md:min-h-[550px] h-full overflow-hidden rounded-md shadow-[0_40px_80px_rgba(0,0,0,0.08)] border border-gray-100 transition-all duration-500 ease-out hover:[transform:perspective(1200px)_rotateY(0deg)]" style={{ transform: 'perspective(1200px) rotateY(5deg)', transformOrigin: 'center center' }}>
               {subject.image && (
                 <div className="absolute inset-0">
                   <img
@@ -139,7 +139,7 @@ function RoadmapItem({ subject, index, isActive, isFirst, isLast, progress = 0 }
         <div className={`w-full md:w-[44%] transition-all duration-1000 transform ${isActive ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-16 md:translate-x-32'} order-1 md:order-3`}>
           {!isEven ? (
             /* Description Panel on Right */
-            <div className="bg-white p-8 md:p-12 lg:p-14 rounded-md shadow-[0_40px_80px_rgba(0,0,0,0.06)] border border-gray-100/50 flex flex-col justify-center h-full md:min-h-[550px]">
+            <div className="bg-white p-8 md:p-12 lg:p-14 rounded-md shadow-[0_40px_80px_rgba(0,0,0,0.06)] border border-gray-100/50 flex flex-col justify-center h-full md:min-h-[550px] transition-all duration-500 ease-out hover:[transform:perspective(1200px)_rotateY(0deg)]" style={{ transform: 'perspective(1200px) rotateY(-5deg)', transformOrigin: 'center center' }}>
               <div className="flex flex-col gap-5">
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-[2px] bg-[#419CB8] rounded-full" />
@@ -157,7 +157,7 @@ function RoadmapItem({ subject, index, isActive, isFirst, isLast, progress = 0 }
             </div>
           ) : (
             /* Image Panel on Right */
-            <div className="relative w-full md:min-h-[550px] h-full overflow-hidden rounded-md shadow-[0_40px_80px_rgba(0,0,0,0.08)] border border-gray-100">
+            <div className="relative w-full md:min-h-[550px] h-full overflow-hidden rounded-md shadow-[0_40px_80px_rgba(0,0,0,0.08)] border border-gray-100 transition-all duration-500 ease-out hover:[transform:perspective(1200px)_rotateY(0deg)]" style={{ transform: 'perspective(1200px) rotateY(-5deg)', transformOrigin: 'center center' }}>
               {subject.image && (
                 <div className="absolute inset-0">
                   <img
@@ -204,46 +204,19 @@ function Curriculum() {
       image: "/assets/Programming.png"
     },
     {
-      id: "rnd",
-      title: "Research and Development",
-      description: "Focuses on the systematic investigation required to innovate, create new technologies, or improve existing systems. It challenges you to apply theoretical knowledge to practical problems, guiding you through the process of designing experiments, prototyping solutions, and documenting your findings.",
-      icon: <RiLightbulbLine className="w-8 h-8 md:w-10 md:h-10" />,
-      image: "/assets/RND.png"
-    },
-    {
-      id: "software-eng",
-      title: "Software Engineering",
-      description: "This covers the systematic methodologies used to design, develop, test, and maintain large-scale software systems. It moves beyond simple coding to focus on project lifecycles, architecture design, and building scalable, reliable applications from the ground up.",
-      icon: <RiArchiveDrawerLine className="w-8 h-8 md:w-10 md:h-10" />,
-      image: "/assets/software Engineering.png"
-    },
-    {
       id: "ai",
       title: "Artificial Intelligence",
       description: "This field explores how to create systems capable of performing tasks that typically require human intelligence. You will study algorithms, machine learning concepts, and data processing to understand how models learn from data, adapt, and make automated decisions.",
       icon: <RiRobot3Line className="w-8 h-8 md:w-10 md:h-10" />,
       image: "/assets/Artificial Intelligence.png"
     },
-    {
-      id: "ojt",
-      title: "On-the-Job Training",
-      description: "This provides practical, real-world experience by placing you in a professional working environment. It bridges the gap between classroom theory and industry practice, allowing you to apply your technical skills to actual workplace projects and understand professional workflows.",
-      icon: <RiBriefcaseLine className="w-8 h-8 md:w-10 md:h-10" />,
-      image: "/assets/ojt.png"
-    },
+
     {
       id: "microprocessors",
       title: "Microprocessors",
       description: "This course dives deep into the central processing unit (CPU) of a computer. You will learn about instruction sets, memory interfacing, and how hardware and software interact at the lowest level to execute commands and process data.",
       icon: <MdMemory className="w-8 h-8 md:w-10 md:h-10" />,
       image: "/assets/microprocessors.png"
-    },
-    {
-      id: "networking",
-      title: "Networking and Cyber Security",
-      description: "This subject explores how computers connect and communicate, covering essential concepts like the OSI model, data link layers, and network protocols. It also emphasizes the strategies, cryptographic principles, and technologies used to protect these networks and sensitive data from unauthorized access and attacks.",
-      icon: <RiShieldKeyholeLine className="w-8 h-8 md:w-10 md:h-10" />,
-      image: "/assets/networking and Cyber Security.png"
     },
     {
       id: "web-design",
@@ -267,11 +240,39 @@ function Curriculum() {
       image: "/assets/Computer architechture and organization.png"
     },
     {
+      id: "software-eng",
+      title: "Software Engineering",
+      description: "This covers the systematic methodologies used to design, develop, test, and maintain large-scale software systems. It moves beyond simple coding to focus on project lifecycles, architecture design, and building scalable, reliable applications from the ground up.",
+      icon: <RiArchiveDrawerLine className="w-8 h-8 md:w-10 md:h-10" />,
+      image: "/assets/software Engineering.png"
+    },
+    {
+      id: "networking",
+      title: "Networking and Cyber Security",
+      description: "This subject explores how computers connect and communicate, covering essential concepts like the OSI model, data link layers, and network protocols. It also emphasizes the strategies, cryptographic principles, and technologies used to protect these networks and sensitive data from unauthorized access and attacks.",
+      icon: <RiShieldKeyholeLine className="w-8 h-8 md:w-10 md:h-10" />,
+      image: "/assets/networking and Cyber Security.png"
+    },
+    {
       id: "robotics",
       title: "Robotics",
       description: "This interdisciplinary field combines hardware design, electronics, and programming to create automated machines. You will learn how to integrate microcontrollers and sensors with mechanical systems to build robots that can perceive and interact with their physical environment.",
       icon: <RiRobot2Line className="w-8 h-8 md:w-10 md:h-10" />,
       image: "/assets/Robotics.png"
+    },
+    {
+      id: "ojt",
+      title: "On-the-Job Training",
+      description: "This provides practical, real-world experience by placing you in a professional working environment. It bridges the gap between classroom theory and industry practice, allowing you to apply your technical skills to actual workplace projects and understand professional workflows.",
+      icon: <RiBriefcaseLine className="w-8 h-8 md:w-10 md:h-10" />,
+      image: "/assets/ojt.png"
+    },
+    {
+      id: "rnd",
+      title: "Research and Development",
+      description: "Focuses on the systematic investigation required to innovate, create new technologies, or improve existing systems. It challenges you to apply theoretical knowledge to practical problems, guiding you through the process of designing experiments, prototyping solutions, and documenting your findings.",
+      icon: <RiLightbulbLine className="w-8 h-8 md:w-10 md:h-10" />,
+      image: "/assets/RND.png"
     },
     {
       id: "certified",
@@ -294,11 +295,11 @@ function Curriculum() {
     // High-Precision Scroll Tracking for Roadmap Line
     const handleScroll = () => {
       if (!containerRef.current) return;
-      
+
       const viewportCenter = window.innerHeight / 2;
       const milestoneElements = containerRef.current.querySelectorAll('.roadmap-milestone');
       const containerRect = containerRef.current.getBoundingClientRect();
-      
+
       let maxProgressIdx = -1;
       let maxProgressVal = 0;
 
@@ -328,14 +329,14 @@ function Curriculum() {
       if (maxProgressIdx !== -1) {
         const targetEl = milestoneElements[maxProgressIdx];
         const targetRect = targetEl.getBoundingClientRect();
-        
+
         // Cap the orb at the node center (50%) for the very last milestone
-        const cappedProgress = maxProgressIdx === subjects.length - 1 
-          ? Math.min(0.5, maxProgressVal) 
+        const cappedProgress = maxProgressIdx === subjects.length - 1
+          ? Math.min(0.5, maxProgressVal)
           : maxProgressVal;
 
         const absoluteTop = (targetRect.top - containerRect.top) + (targetRect.height * cappedProgress);
-        
+
         setOrbTop(prev => Math.max(prev, absoluteTop)); // One-way orb too
       }
     };
@@ -350,7 +351,7 @@ function Curriculum() {
     <div className="bg-[#fcfcfc] min-h-screen pt-20 md:pt-40 overflow-hidden scroll-smooth">
       {/* Cinematic Header Section */}
       <div className="max-w-7xl mx-auto px-6 mb-16 md:mb-32 text-center relative z-10">
-        <div className="inline-flex flex-col items-center relative py-10 md:py-20 w-full">
+        <div className="flex flex-col items-center relative py-10 md:py-20 w-full rounded-md overflow-hidden shadow-[0_20px_60px_rgba(0,0,0,0.10)]">
           {/* Background Image Container with Gradient Fade */}
           <div className="absolute inset-0 -z-10 w-full h-full overflow-hidden">
             <img
@@ -362,12 +363,12 @@ function Curriculum() {
             {/* Radial Gradient to clear the center for text */}
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-from)_0%,_transparent_70%)] from-white/80 via-white/40 to-transparent" />
           </div>
-          
+
           <div className="mb-6 flex items-center justify-center gap-4 bg-white/80 px-6 py-2.5 rounded-full border border-[#419CB8]/20 text-[#419CB8] backdrop-blur-xl shadow-sm z-20">
             <RiInformationLine className="w-5 h-5 md:w-6 md:h-6" />
             <span className="text-[10px] md:text-sm font-black uppercase tracking-[0.4em]">Curriculum Roadmap</span>
           </div>
-          <h1 className="font-black tracking-tighter uppercase font-['Space_Grotesk'] text-4xl md:text-8xl lg:text-[10rem] text-[#1e293b] leading-[0.85] mb-6 drop-shadow-[0_4px_12px_rgba(255,255,255,0.8)] z-20">
+          <h1 className="font-black tracking-tighter uppercase font-['Space_Grotesk'] text-4xl md:text-8xl lg:text-[10rem] text-[#1e293b] leading-[0.85] mb-6 drop-shadow-[0_4px_12px_rgba(255,255,255,0.8)] z-20 text-center w-full">
             CORE <span className="text-[#419CB8]">JOURNEY</span>
           </h1>
           <p className="font-medium tracking-[0.2em] md:tracking-[0.4em] uppercase text-gray-500 text-xs md:text-xl max-w-2xl text-center bg-white/30 backdrop-blur-sm rounded-lg px-4 py-1 z-20">
@@ -376,12 +377,14 @@ function Curriculum() {
         </div>
       </div>
 
-      <div ref={containerRef} className="relative w-full max-w-screen-2xl mx-auto pb-48 md:pb-96">
+      {/* Roadmap Section with #EEEEEE background */}
+      <div className="bg-[#EEEEEE] rounded-md mx-6 md:mx-12 mb-16 md:mb-32">
+        <div ref={containerRef} className="relative w-full max-w-screen-2xl mx-auto pb-48 md:pb-96">
         {/* Global Neon Orb - Glides through the entire roadmap path with a subtle glow */}
         {orbTop > 0 && (
-          <div 
+          <div
             className="absolute left-[24px] md:left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 md:w-8 md:h-8 bg-white rounded-full z-40 shadow-[0_0_15px_rgba(65,156,184,0.6)] border-2 border-white transition-all duration-300 ease-out pointer-events-none"
-            style={{ 
+            style={{
               top: `${orbTop}px`,
               filter: 'drop-shadow(0 0 8px rgba(65,156,184,0.3))'
             }}
@@ -408,6 +411,7 @@ function Curriculum() {
               </div>
             );
           })}
+        </div>
         </div>
       </div>
 
