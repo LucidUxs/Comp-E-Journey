@@ -143,7 +143,7 @@ function ScrollingRow({ items, baseSpeed = 0.5, reverse = false }) {
         {items.map((career, idx) => (
           <div
             key={`${career.id}-${idx}`}
-            className="inline-block relative w-[240px] md:w-[300px] h-[380px] md:h-[450px] rounded-[2rem] overflow-hidden group shadow-xl transition-all duration-500 hover:scale-105 bg-slate-900 shrink-0"
+            className="inline-block relative w-[240px] md:w-[300px] h-[380px] md:h-[450px] rounded-md overflow-hidden group shadow-xl transition-all duration-500 hover:scale-105 bg-slate-900 shrink-0"
           >
             <div className="absolute inset-0 bg-gradient-to-br from-[#00607a]/20 to-black/20 z-0" />
             {career.image && (

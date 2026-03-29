@@ -337,7 +337,15 @@ function Curriculum() {
         // Let the orb glide to the bottom of the final milestone
         const cappedProgress = maxProgressVal;
 
-        const absoluteTop = (targetRect.top - containerRect.top) + (targetRect.height * cappedProgress);
+        let absoluteTop = (targetRect.top - containerRect.top) + (targetRect.height * cappedProgress);
+
+        // Limit the orb so it stops exactly at the visual connector joints within the final button container
+        if (maxProgressIdx === subjects.length) {
+          const isMobile = window.innerWidth < 768;
+          const maxDrop = isMobile ? 32 : 48; // h-8 (32px) on mobile, h-12 (48px) on desktop
+          const maxAbsolute = (targetRect.top - containerRect.top) + maxDrop;
+          absoluteTop = Math.min(absoluteTop, maxAbsolute);
+        }
 
         setOrbTop(prev => Math.max(prev, absoluteTop)); // One-way orb too
       }
@@ -415,17 +423,22 @@ function Curriculum() {
             })}
 
             {/* Final Connect to Careers Button */}
-            <div className="relative w-full flex flex-col items-center justify-center pb-12 z-20">
-              {/* Connector from end of roadmap to button */}
-              <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 top-0 w-[4px] md:w-[8px] h-12 bg-[#419CB8] shadow-[0_0_10px_rgba(65,156,184,0.3)] z-0" />
+            <div data-index={subjects.length} className="roadmap-milestone relative w-full pb-12 z-20 flex flex-col md:items-center justify-center">
+              {/* DESKTOP Connector from end of roadmap to button */}
+              <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 w-[8px] h-12 bg-[#419CB8] shadow-[0_0_10px_rgba(65,156,184,0.3)] z-0" />
               
-              <Link
-                to="/careers"
-                className="relative z-20 mt-12 bg-white text-[#419CB8] border-2 border-[#419CB8] font-black py-4 px-8 md:px-12 rounded-full shadow-[0_10px_30px_rgba(65,156,184,0.15)] hover:bg-[#419CB8] hover:text-white hover:scale-105 hover:-translate-y-1 transition-all duration-300 flex items-center gap-3 uppercase tracking-widest text-xs md:text-sm group"
-              >
+              {/* MOBILE Vertical Connector straight onto the left boundary of the w-full button */}
+              <div className="md:hidden absolute left-[24px] -translate-x-1/2 top-0 w-[4px] h-8 bg-[#419CB8] shadow-[0_0_10px_rgba(65,156,184,0.3)] z-0" />
+              
+              <div className="pt-8 md:mt-12 md:pt-0 w-full px-6 md:px-0 md:w-auto">
+                <Link
+                  to="/careers"
+                  className="w-full md:w-auto relative z-20 bg-white text-[#419CB8] border-2 border-[#419CB8] font-black py-4 px-8 md:px-12 rounded-full shadow-[0_10px_30px_rgba(65,156,184,0.15)] hover:bg-[#419CB8] hover:text-white hover:scale-105 hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-3 uppercase tracking-widest text-xs md:text-sm group"
+                >
                 <span>Explore Careers</span>
                 <RiArrowRightSLine className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Link>
+              </div>
             </div>
           </div>
         </div>
