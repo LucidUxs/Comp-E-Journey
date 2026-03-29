@@ -18,49 +18,38 @@ import {
 } from 'react-icons/ri';
 import { MdMemory } from 'react-icons/md';
 
-function RoadmapItem({ subject, index, isActive, isFirst, isLast, progress = 0, showTip }) {
+function RoadmapItem({ subject, index, isActive, isFirst, isLast, progress = 0 }) {
   const isEven = index % 2 === 0;
-
-  // Calculate segment fills based on progress (0-1)
-  // Progress 0-0.5 fills top half, 0.5-1 fills bottom half
-  const topFill = Math.min(100, progress * 200);
-  const bottomFill = Math.max(0, (progress - 0.5) * 200);
+  
+  // For the last milestone, the container is only h-1/2 (top to node center).
+  // Progress 0.5 = orb at node center = should fill container 100%.
+  // So we scale: fillRatio = isLast ? progress * 2 : progress
+  const fillRatio = isLast ? Math.min(1, progress * 2) : progress;
 
   return (
     <div className="relative w-full min-h-[400px] md:min-h-[600px] flex items-center justify-center py-12 md:py-24 group">
       
       {/* Connector Lines (Vertical) */}
-      <div className={`absolute left-[24px] md:left-1/2 -translate-x-1/2 w-[4px] md:w-[8px] z-0 ${isFirst ? 'top-1/2 bottom-0' : isLast ? 'top-0 h-1/2' : 'top-0 bottom-0'}`}>
+      <div className={`absolute left-[24px] md:left-1/2 -translate-x-1/2 w-[4px] md:w-[8px] z-0 ${isFirst ? 'top-0 bottom-0' : isLast ? 'top-0 h-1/2' : 'top-0 bottom-0'}`}>
         {/* Gray Background Line */}
         <div className="absolute inset-0 bg-gray-100/50" />
         
-        {/* Blue Progress Line (Smooth + Neon Glow) */}
+        {/* Blue Progress Line (Smooth + Subtle Neon Glow) */}
         <div 
-          className="absolute top-0 left-0 right-0 bg-[#419CB8] transition-all duration-300 ease-out z-10 shadow-[0_0_20px_rgba(65,156,184,0.6)]" 
-          style={{ height: progress >= 0.99 ? '101%' : `${progress * 100}%` }}
+          className="absolute top-0 left-0 right-0 bg-[#419CB8] transition-all duration-300 ease-out z-10 shadow-[0_0_10px_rgba(65,156,184,0.3)]" 
+          style={{ height: fillRatio >= 0.99 ? '100%' : `${fillRatio * 100}%` }}
         />
-
-        {/* Glowing Tip (Neon Circle - Improved Visibility) */}
-        {showTip && (
-          <div 
-            className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 md:w-8 md:h-8 bg-white rounded-full z-30 shadow-[0_0_15px_#419CB8,0_0_30px_#419CB8,0_0_50px_#419CB8] border-2 border-white"
-            style={{ 
-              top: `${progress * 100}%`,
-              filter: 'drop-shadow(0 0 10px #419CB8)'
-            }}
-          />
-        )}
       </div>
 
-      {/* Central Road Node (Neon Enhanced) */}
-      <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 z-30 transition-all duration-700">
+      {/* Central Road Node (Subtle Neon Enhancement) */}
+      <div className="absolute left-[24px] md:left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2 z-30 transition-all duration-700">
         <div className={`w-6 h-6 md:w-10 md:h-10 rounded-full border-4 transition-all duration-700 
-          ${(isFirst && progress > 0) || (isLast && progress > 0.9) || (!isFirst && !isLast && progress > 0.5) 
-            ? 'bg-[#419CB8] border-white scale-125 md:scale-150 shadow-[0_0_30px_rgba(65,156,184,0.8),0_0_60px_rgba(65,156,184,0.4)]' 
+          ${progress > 0.5 
+            ? 'bg-[#419CB8] border-white scale-125 md:scale-150 shadow-[0_0_20px_rgba(65,156,184,0.4)]' 
             : 'bg-gray-200 border-white shadow-none'}`} 
         />
-        {((isFirst && progress > 0) || (isLast && progress > 0.9) || (!isFirst && !isLast && progress > 0.5)) && (
-          <div className="absolute inset-0 rounded-full bg-[#419CB8] animate-ping opacity-30 blur-[2px]" />
+        {progress > 0.5 && (
+          <div className="absolute inset-0 rounded-full bg-[#419CB8] animate-ping opacity-15 blur-[1px]" />
         )}
       </div>
 
@@ -196,6 +185,7 @@ function RoadmapItem({ subject, index, isActive, isFirst, isLast, progress = 0, 
 function Curriculum() {
   const [activeIndices, setActiveIndices] = useState([]);
   const [milestoneRatios, setMilestoneRatios] = useState({});
+  const [orbTop, setOrbTop] = useState(0);
   const containerRef = useRef(null);
 
   const subjects = [
@@ -307,31 +297,51 @@ function Curriculum() {
       
       const viewportCenter = window.innerHeight / 2;
       const milestoneElements = containerRef.current.querySelectorAll('.roadmap-milestone');
+      const containerRect = containerRef.current.getBoundingClientRect();
       
+      let maxProgressIdx = -1;
+      let maxProgressVal = 0;
+
       milestoneElements.forEach((el, index) => {
         const rect = el.getBoundingClientRect();
-        
-        // Calculate progress based on screen center (0 to 1)
-        // 0 when the milestone top enters center screen
-        // 1 when the milestone bottom reaches center screen
         let progress = (viewportCenter - rect.top) / rect.height;
         progress = Math.max(0, Math.min(1, progress));
 
-        // Update discrete reveal state for cards
         if (progress > 0.1) {
           setActiveIndices(prev => [...new Set([...prev, index])].sort((a, b) => a - b));
         }
 
-        // Update continuous ratio state - keeping MAX seen for "one-way" progress
+        // Keep local segment progress "one-way"
         setMilestoneRatios(prev => {
           if ((prev[index] || 0) >= progress) return prev;
           return { ...prev, [index]: progress };
         });
+
+        // Track the current 'front' of the line for the global orb
+        if (progress > 0) {
+          maxProgressIdx = index;
+          maxProgressVal = progress;
+        }
       });
+
+      // Calculate absolute Y position of the tip relative to container
+      if (maxProgressIdx !== -1) {
+        const targetEl = milestoneElements[maxProgressIdx];
+        const targetRect = targetEl.getBoundingClientRect();
+        
+        // Cap the orb at the node center (50%) for the very last milestone
+        const cappedProgress = maxProgressIdx === subjects.length - 1 
+          ? Math.min(0.5, maxProgressVal) 
+          : maxProgressVal;
+
+        const absoluteTop = (targetRect.top - containerRect.top) + (targetRect.height * cappedProgress);
+        
+        setOrbTop(prev => Math.max(prev, absoluteTop)); // One-way orb too
+      }
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial call
+    handleScroll();
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [subjects.length]);
@@ -367,6 +377,17 @@ function Curriculum() {
       </div>
 
       <div ref={containerRef} className="relative w-full max-w-screen-2xl mx-auto pb-48 md:pb-96">
+        {/* Global Neon Orb - Glides through the entire roadmap path with a subtle glow */}
+        {orbTop > 0 && (
+          <div 
+            className="absolute left-[24px] md:left-1/2 -translate-x-1/2 -translate-y-1/2 w-6 h-6 md:w-8 md:h-8 bg-white rounded-full z-40 shadow-[0_0_15px_rgba(65,156,184,0.6)] border-2 border-white transition-all duration-300 ease-out pointer-events-none"
+            style={{ 
+              top: `${orbTop}px`,
+              filter: 'drop-shadow(0 0 8px rgba(65,156,184,0.3))'
+            }}
+          />
+        )}
+
         <div className="relative z-10 flex flex-col">
           {subjects.map((subject, idx) => {
             const ratio = milestoneRatios[idx] || 0;
@@ -374,19 +395,15 @@ function Curriculum() {
             const isCompleted = Object.entries(milestoneRatios).some(([id, r]) => parseInt(id) > idx && r > 0);
             const progress = isCompleted ? 1 : ratio;
 
-            // Only show glow-tip on the CURRENT front of the line
-            const isLastActive = idx === (activeIndices.length > 0 ? Math.max(...activeIndices) : -1);
-
             return (
-              <div key={subject.id} data-index={idx} className="roadmap-milestone">
+              <div key={subject.id} data-index={idx} className="roadmap-milestone mb-[-1px]">
                 <RoadmapItem
                   subject={subject}
                   index={idx}
                   isActive={activeIndices.includes(idx)}
                   isFirst={idx === 0}
                   isLast={idx === subjects.length - 1}
-                  progress={progress}
-                  showTip={isLastActive && progress < 1 && progress > 0}
+                  progress={progress >= 0.99 ? 1 : progress}
                 />
               </div>
             );
