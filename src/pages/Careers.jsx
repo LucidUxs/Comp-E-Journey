@@ -251,11 +251,19 @@ function TestimonialSection() {
 
   const slideOffset = isMobile ? 296 : 424;
 
+  const [isAnimating, setIsAnimating] = useState(false);
+
   const handlePrev = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
     setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+    setTimeout(() => setIsAnimating(false), 500); // 500ms debounce match visual transition
   };
   const handleNext = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
     setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+    setTimeout(() => setIsAnimating(false), 500);
   };
 
   return (
@@ -317,18 +325,23 @@ function TestimonialSection() {
               className="bg-[#419CB8] rounded-[2rem] md:rounded-r-none md:rounded-l-[4rem] px-4 md:px-0 py-8 md:py-12 md:pr-12 md:pl-24 relative z-10 ml-0 md:-mr-[50vw] md:pr-[50vw] overflow-hidden shadow-2xl shadow-[#419CB8]/30 group"
             >
               <div
-                className="flex gap-4 md:gap-6 transition-transform duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] w-max"
-                style={{ transform: `translateX(calc(-${currentIndex * slideOffset}px))` }}
+                className="flex gap-4 md:gap-6 w-max"
+                style={{
+                  transform: `translate3d(-${currentIndex * slideOffset}px, 0, 0)`,
+                  transition: 'transform 600ms cubic-bezier(0.25, 1, 0.5, 1)',
+                  willChange: 'transform'
+                }}
               >
                 {testimonials.map((testi, idx) => {
                   const isActive = idx === currentIndex;
                   return (
                     <div
                       key={testi.id}
-                      className={`relative w-[280px] md:w-[400px] shrink-0 rounded-[2rem] p-6 md:p-10 transition-all duration-700 ${isActive
+                      className={`relative w-[280px] md:w-[400px] shrink-0 rounded-[2rem] p-6 md:p-10 ${isActive
                         ? 'bg-white shadow-[0_20px_50px_rgba(0,0,0,0.15)] scale-100 border-b-4 border-[#419CB8]'
-                        : 'bg-white/20 backdrop-blur-md scale-95 opacity-60 cursor-pointer hover:bg-white/40 hover:opacity-100 hover:scale-[0.98]'
+                        : 'bg-white/20 scale-95 opacity-60 cursor-pointer hover:bg-white/30 hover:opacity-90 hover:scale-[0.98]'
                         }`}
+                      style={{ transition: 'transform 600ms cubic-bezier(0.25,1,0.5,1), opacity 400ms ease, background-color 400ms ease' }}
                       onClick={() => !isActive && setCurrentIndex(idx)}
                     >
                       {/* Faint Quote Icon in background */}
