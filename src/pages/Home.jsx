@@ -120,7 +120,7 @@ export default function Home() {
             {/* Hero Section */}
             <section className="max-w-6xl mx-auto flex flex-col lg:flex-row items-center justify-between py-24 px-6 gap-16">
                 <div className="max-w-lg">
-                    <h1 className="text-5xl lg:text-[5.5rem] font-black tracking-tight leading-[0.9] mb-6">
+                    <h1 className="text-5xl lg:text-[5.5rem] font-black tracking-tight leading-[0.9] mb-6 text-center md:text-left">
                         COMPUTER <br />
                         <span className="text-[#419CB8]">ENGINEERING</span>
                     </h1>
@@ -559,7 +559,7 @@ export default function Home() {
                         <p className="text-gray-400 font-medium tracking-tight">The foundation of your journey into technology and innovation</p>
                     </div>
                     {/* Top row: 3 pillars */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+                    <div className="grid grid-cols-3 gap-3 sm:gap-6 mb-3 sm:mb-6">
                         {[
                             {
                                 title: 'Computer Architecture & Hardware Engineering',
@@ -582,24 +582,24 @@ export default function Home() {
                         ].map(({ title, icon: Icon, file, tilt }) => (
                             <div key={file} style={{ transform: windowWidth >= 1024 ? tilt : 'none' }} className="transition-transform duration-700">
                                 <div className="flex flex-col h-full rounded-xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.08)] border border-gray-100 group hover:shadow-[0_16px_60px_rgba(0,0,0,0.14)] transition-all duration-500 hover:-translate-y-1 bg-white">
-                                    <div className="bg-[#2d2d2d] px-4 py-3 flex items-center justify-between">
-                                        <div className="flex gap-2">
-                                            <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
-                                            <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
-                                            <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                                    <div className="bg-[#2d2d2d] px-2 sm:px-4 py-2 sm:py-3 flex items-center justify-between">
+                                        <div className="flex gap-1 sm:gap-2">
+                                            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#ff5f56]"></div>
+                                            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#ffbd2e]"></div>
+                                            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#27c93f]"></div>
                                         </div>
-                                        <span className="text-gray-500 text-[10px] font-mono">{file}</span>
+                                        <span className="text-gray-500 text-[7px] sm:text-[10px] font-mono hidden sm:block">{file}</span>
                                     </div>
-                                    <div className="p-8 flex flex-col flex-1 items-start justify-center min-h-[160px]">
-                                        <Icon className="w-10 h-10 text-gray-400 group-hover:text-[#419CB8] transition-colors mb-4" />
-                                        <h3 className="text-sm font-black tracking-tight uppercase leading-snug text-gray-800 group-hover:text-[#419CB8] transition-colors">{title}</h3>
+                                    <div className="p-3 sm:p-8 flex flex-col flex-1 items-center justify-center text-center min-h-[100px] sm:min-h-[160px]">
+                                        <Icon className="w-5 h-5 sm:w-10 sm:h-10 text-gray-400 group-hover:text-[#419CB8] transition-colors mb-2 sm:mb-4" />
+                                        <h3 className="text-[8px] sm:text-sm font-black tracking-tight uppercase leading-snug text-gray-800 group-hover:text-[#419CB8] transition-colors">{title}</h3>
                                     </div>
                                 </div>
                             </div>
                         ))}
                     </div>
                     {/* Bottom row: 2 pillars centered */}
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-2xl mx-auto w-full">
+                    <div className="grid grid-cols-2 gap-3 sm:gap-6 max-w-2xl mx-auto w-full">
                         {[
                             {
                                 title: 'Networking & Communications',
@@ -616,17 +616,17 @@ export default function Home() {
                         ].map(({ title, icon: Icon, file, tilt }) => (
                             <div key={file} style={{ transform: windowWidth >= 1024 ? tilt : 'none' }} className="transition-transform duration-700">
                                 <div className="flex flex-col h-full rounded-xl overflow-hidden shadow-[0_8px_40px_rgba(0,0,0,0.08)] border border-gray-100 group hover:shadow-[0_16px_60px_rgba(0,0,0,0.14)] transition-all duration-500 hover:-translate-y-1 bg-white">
-                                    <div className="bg-[#2d2d2d] px-4 py-3 flex items-center justify-between">
-                                        <div className="flex gap-2">
-                                            <div className="w-3 h-3 rounded-full bg-[#ff5f56]"></div>
-                                            <div className="w-3 h-3 rounded-full bg-[#ffbd2e]"></div>
-                                            <div className="w-3 h-3 rounded-full bg-[#27c93f]"></div>
+                                    <div className="bg-[#2d2d2d] px-2 sm:px-4 py-2 sm:py-3 flex items-center justify-between">
+                                        <div className="flex gap-1 sm:gap-2">
+                                            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#ff5f56]"></div>
+                                            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#ffbd2e]"></div>
+                                            <div className="w-2 h-2 sm:w-3 sm:h-3 rounded-full bg-[#27c93f]"></div>
                                         </div>
-                                        <span className="text-gray-500 text-[10px] font-mono">{file}</span>
+                                        <span className="text-gray-500 text-[7px] sm:text-[10px] font-mono hidden sm:block">{file}</span>
                                     </div>
-                                    <div className="p-8 flex flex-col flex-1 items-start justify-center min-h-[160px]">
-                                        <Icon className="w-10 h-10 text-gray-400 group-hover:text-[#419CB8] transition-colors mb-4" />
-                                        <h3 className="text-sm font-black tracking-tight uppercase leading-snug text-gray-800 group-hover:text-[#419CB8] transition-colors">{title}</h3>
+                                    <div className="p-3 sm:p-8 flex flex-col flex-1 items-center justify-center text-center min-h-[100px] sm:min-h-[160px]">
+                                        <Icon className="w-5 h-5 sm:w-10 sm:h-10 text-gray-400 group-hover:text-[#419CB8] transition-colors mb-2 sm:mb-4" />
+                                        <h3 className="text-[8px] sm:text-sm font-black tracking-tight uppercase leading-snug text-gray-800 group-hover:text-[#419CB8] transition-colors">{title}</h3>
                                     </div>
                                 </div>
                             </div>
