@@ -343,7 +343,7 @@ function Curriculum() {
         // Limit the orb so it stops exactly at the visual connector joints within the final button container
         if (maxProgressIdx === subjects.length) {
           const isMobile = window.innerWidth < 768;
-          const maxDrop = isMobile ? 32 : 48; // h-8 (32px) on mobile, h-12 (48px) on desktop
+          const maxDrop = isMobile ? 56 : 48; // mid-button connection on mobile, top connection on desktop
           const maxAbsolute = (targetRect.top - containerRect.top) + maxDrop;
           absoluteTop = Math.min(absoluteTop, maxAbsolute);
           
@@ -361,6 +361,8 @@ function Curriculum() {
 
     return () => window.removeEventListener('scroll', handleScroll);
   }, [subjects.length]);
+
+  const finalProgress = milestoneRatios[subjects.length] || 0;
 
   return (
     <div className="bg-[#fcfcfc] min-h-screen pt-12 md:pt-16 overflow-hidden scroll-smooth">
@@ -430,12 +432,29 @@ function Curriculum() {
             {/* Final Connect to Careers Button */}
             <div data-index={subjects.length} className="roadmap-milestone relative w-full pb-12 z-20 flex flex-col md:items-center justify-center">
               {/* DESKTOP Connector from end of roadmap to button */}
-              <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 w-[8px] h-12 bg-[#419CB8] shadow-[0_0_10px_rgba(65,156,184,0.3)] z-0" />
+              <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-0 w-[8px] h-12 bg-gray-100/50 z-0 overflow-hidden">
+                <div 
+                  className="absolute top-0 left-0 right-0 bg-[#419CB8] transition-all duration-300 shadow-[0_0_10px_rgba(65,156,184,0.3)]"
+                  style={{ height: finalProgress >= 0.99 || isButtonGlowing ? '100%' : `${Math.min(100, finalProgress * 250)}%` }} 
+                />
+              </div>
               
-              {/* MOBILE Vertical Connector straight onto the left boundary of the w-full button */}
-              <div className="md:hidden absolute left-[24px] -translate-x-1/2 top-0 w-[4px] h-8 bg-[#419CB8] shadow-[0_0_10px_rgba(65,156,184,0.3)] z-0" />
+              {/* MOBILE Vertical Connector straight down to button center level */}
+              <div className="md:hidden absolute left-[24px] -translate-x-1/2 top-0 w-[4px] h-[58px] bg-gray-100/50 z-0 rounded-b-sm overflow-hidden">
+                <div 
+                  className="absolute top-0 left-0 right-0 bg-[#419CB8] transition-all duration-300 shadow-[0_0_10px_rgba(65,156,184,0.3)]" 
+                  style={{ height: finalProgress >= 0.99 || isButtonGlowing ? '100%' : `${Math.min(100, finalProgress * 250)}%` }} 
+                />
+              </div>
               
-              <div className="pt-8 md:mt-12 md:pt-0 w-full px-6 md:px-0 md:w-auto">
+              {/* MOBILE Horizontal Connector into button side */}
+              <div className="md:hidden absolute left-[24px] top-[56px] w-10 h-[4px] -translate-y-1/2 bg-gray-100/50 z-0 rounded-r-sm overflow-hidden">
+                <div 
+                  className={`absolute top-0 left-0 bottom-0 bg-[#419CB8] transition-all duration-300 shadow-[0_0_10px_rgba(65,156,184,0.3)] ${isButtonGlowing ? 'w-full' : 'w-0'}`} 
+                />
+              </div>
+              
+              <div className="pt-8 md:mt-12 md:pt-0 w-full pl-16 pr-6 md:px-0 md:w-auto">
                 <Link
                   to="/careers"
                   className={`w-full md:w-auto relative z-20 font-black py-4 px-8 md:px-12 rounded-full hover:-translate-y-1 transition-all duration-500 flex items-center justify-center gap-3 uppercase tracking-widest text-xs md:text-sm group ${

@@ -268,7 +268,7 @@ function TestimonialSection() {
   };
 
   return (
-    <div className="mt-20 md:mt-32 max-w-[100vw] overflow-hidden relative pb-16 md:pb-32 pt-20 md:pt-32">
+    <div className="max-w-[100vw] overflow-hidden relative pb-16 md:pb-32 pt-12 md:pt-20">
       <div
         ref={sectionRef}
         className={`max-w-7xl mx-auto px-6 relative z-10 reveal ${sectionVisible ? 'reveal-active' : ''}`}
@@ -364,7 +364,7 @@ function TestimonialSection() {
                             </p>
                           </div>
                         </div>
-                        <p className={`text-sm md:text-base leading-relaxed font-medium transition-colors duration-500 ${isActive ? 'text-gray-600' : 'text-white/95'}`}>
+                        <p className={`text-sm md:text-base text-justify leading-relaxed font-medium transition-colors duration-500 ${isActive ? 'text-gray-600' : 'text-white/95'}`}>
                           "{testi.text}"
                         </p>
                         {testi.imageSource && (
@@ -457,7 +457,7 @@ function Careers() {
       </div>
 
       {/* Infinite Sliders Wrapper */}
-      <div className="flex flex-col gap-12 relative bg-[#EEEEEE] py-12 md:py-24 mb-20 md:mb-32">
+      <div className="flex flex-col gap-12 relative bg-[#EEEEEE] py-12 md:py-24">
         {/* Swipe Indicator + Row 1 */}
         <div ref={row1Ref} className={`flex flex-col gap-4 reveal ${row1Visible ? 'reveal-active' : ''}`} style={{ transitionDelay: '150ms' }}>
           <div className="md:hidden flex flex-col items-center gap-2 pointer-events-none opacity-50 mb-4">
