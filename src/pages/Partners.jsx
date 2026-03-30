@@ -50,7 +50,7 @@ export default function Partners() {
                                 <p className="font-bold text-[#419CB8] mb-3 text-base sm:text-lg lg:text-xl whitespace-normal md:whitespace-nowrap leading-tight">
                                     The Institute of Computer Engineers of the Philippines (ICpEP), Inc.
                                 </p>
-                                <p className="text-left md:text-justify">
+                                <p className="text-justify">
                                     The country’s premier professional organization for computer engineering, representing practitioners, educators, and students. Founded in 1992 and reformed in 2008, it serves as the official body for industry and academia, dedicated to elevating the profession through the Certified Computer Engineer (CCpE) credential and strategic partnerships. With its vision to produce world-class Filipino engineers, ICpEP fosters a culture of excellence, innovation, and global competitiveness by bridging the gap between local talent and the international technological landscape.
                                 </p>
                             </div>
@@ -74,7 +74,7 @@ export default function Partners() {
                             {/* Left: Scattered Logos */}
                             <div className="w-full lg:w-1/2">
                                 <h2 className="text-5xl sm:text-7xl font-black tracking-tighter mb-4">Our Network</h2>
-                                <p className="text-gray-400 font-bold tracking-tight mb-12 max-w-md">Over 30+ elite universities have partnered with Computer Engineering across the archipelago.</p>
+                                <p className="text-gray-400 font-bold tracking-tight mb-12 max-w-md text-justify">Over 30+ elite universities have partnered with Computer Engineering across the archipelago.</p>
 
                                 <div className="relative h-[250px] md:h-[400px] lg:h-[500px] w-full bg-gray-50 rounded-[30px] lg:rounded-[40px] border-2 border-gray-100 p-4 lg:p-8 overflow-hidden shadow-inner">
                                     {/* Scattered Logo Placeholders - Improved Visibility for Mobile */}
@@ -107,7 +107,7 @@ export default function Partners() {
                                         src="/assets/philippines_map.png"
                                         alt="Philippines Map"
                                         loading="lazy"
-                                        className="w-[280px] md:w-[400px] lg:w-[550px] max-w-full h-auto drop-shadow-[0_20px_40px_rgba(65,156,184,0.3)] lg:drop-shadow-[0_30px_70px_rgba(65,156,184,0.25)]"
+                                        className="w-[350px] sm:w-[400px] md:w-[450px] lg:w-[550px] max-w-full h-auto drop-shadow-[0_20px_40px_rgba(65,156,184,0.3)] lg:drop-shadow-[0_30px_70px_rgba(65,156,184,0.25)]"
                                     />
                                     {/* Location Pin Icons on Map */}
                                     {PIN_LOCATIONS.map((pin, idx) => (
@@ -131,31 +131,31 @@ export default function Partners() {
                         <h2 className="text-4xl sm:text-6xl font-black tracking-tighter mb-3 uppercase">Why Partner With Us?</h2>
                         <div className="w-16 h-1 bg-[#419CB8] mx-auto opacity-30"></div>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-12 sm:gap-20">
-                        <div className="group">
-                            <div className="w-14 h-14 bg-gray-50 rounded-2xl mb-8 flex items-center justify-center group-hover:bg-[#419CB8]/5 transition-all">
-                                <HiOutlineUserGroup className="w-7 h-7 text-[#419CB8]/60 group-hover:text-[#419CB8] group-hover:scale-110 transition-all" />
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 sm:gap-12 lg:gap-16">
+                        <div className="group bg-white rounded-3xl p-8 sm:p-10 shadow-lg hover:shadow-2xl hover:shadow-[#419CB8]/20 transition-all duration-300 border border-gray-100 flex flex-col h-full hover:-translate-y-2">
+                            <div className="w-16 h-16 bg-gray-50 rounded-2xl mb-8 flex items-center justify-center group-hover:bg-[#419CB8]/10 transition-all">
+                                <HiOutlineUserGroup className="w-8 h-8 text-[#419CB8]/60 group-hover:text-[#419CB8] group-hover:scale-110 transition-all" />
                             </div>
-                            <h3 className="text-xl font-bold mb-4 tracking-tight">Talent Pipeline</h3>
-                            <p className="text-gray-500 leading-relaxed text-sm">
+                            <h3 className="text-2xl font-bold mb-4 tracking-tight">Talent Pipeline</h3>
+                            <p className="text-gray-500 leading-relaxed text-justify">
                                 Gain early access to the next generation of Computer Engineering leaders. Our students are trained in industry-standard technologies and methodologies.
                             </p>
                         </div>
-                        <div className="group">
-                            <div className="w-14 h-14 bg-gray-50 rounded-2xl mb-8 flex items-center justify-center group-hover:bg-[#419CB8]/5 transition-all">
-                                <HiOutlineLightBulb className="w-7 h-7 text-[#419CB8]/60 group-hover:text-[#419CB8] group-hover:scale-110 transition-all" />
+                        <div className="group bg-white rounded-3xl p-8 sm:p-10 shadow-lg hover:shadow-2xl hover:shadow-[#419CB8]/20 transition-all duration-300 border border-gray-100 flex flex-col h-full hover:-translate-y-2">
+                            <div className="w-16 h-16 bg-gray-50 rounded-2xl mb-8 flex items-center justify-center group-hover:bg-[#419CB8]/10 transition-all">
+                                <HiOutlineLightBulb className="w-8 h-8 text-[#419CB8]/60 group-hover:text-[#419CB8] group-hover:scale-110 transition-all" />
                             </div>
-                            <h3 className="text-xl font-bold mb-4 tracking-tight">Innovation Hub</h3>
-                            <p className="text-gray-500 leading-relaxed text-sm">
+                            <h3 className="text-2xl font-bold mb-4 tracking-tight">Innovation Hub</h3>
+                            <p className="text-gray-500 leading-relaxed text-justify">
                                 Collaborate on real-world projects, research initiatives, and technological breakthroughs in AI, IoT, and embedded systems.
                             </p>
                         </div>
-                        <div className="group">
-                            <div className="w-14 h-14 bg-gray-50 rounded-2xl mb-8 flex items-center justify-center group-hover:bg-[#419CB8]/5 transition-all">
-                                <HiOutlineStar className="w-7 h-7 text-[#419CB8]/60 group-hover:text-[#419CB8] group-hover:scale-110 transition-all" />
+                        <div className="group bg-white rounded-3xl p-8 sm:p-10 shadow-lg hover:shadow-2xl hover:shadow-[#419CB8]/20 transition-all duration-300 border border-gray-100 flex flex-col h-full hover:-translate-y-2">
+                            <div className="w-16 h-16 bg-gray-50 rounded-2xl mb-8 flex items-center justify-center group-hover:bg-[#419CB8]/10 transition-all">
+                                <HiOutlineStar className="w-8 h-8 text-[#419CB8]/60 group-hover:text-[#419CB8] group-hover:scale-110 transition-all" />
                             </div>
-                            <h3 className="text-xl font-bold mb-4 tracking-tight">Brand Leadership</h3>
-                            <p className="text-gray-500 leading-relaxed text-sm">
+                            <h3 className="text-2xl font-bold mb-4 tracking-tight">Brand Leadership</h3>
+                            <p className="text-gray-500 leading-relaxed text-justify">
                                 Position your organization at the forefront of engineering education and support the growth of the Philippine tech ecosystem.
                             </p>
                         </div>
